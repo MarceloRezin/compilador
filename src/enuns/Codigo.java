@@ -1,6 +1,6 @@
 package enuns;
 
-public enum Tokens {
+public enum Codigo {
 
     PROGRAM(1),
     LABEL(2),
@@ -56,7 +56,7 @@ public enum Tokens {
 
     private int codigo;
 
-    Tokens(int codigo){
+    Codigo(int codigo){
         this.codigo = codigo;
     }
 

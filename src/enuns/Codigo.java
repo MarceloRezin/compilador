@@ -45,10 +45,10 @@ public enum Codigo {
     OP_MAIOR(41),
     OP_MAIOR_OU_IGUAL(42),
     OP_MENOR(43),
-    OP_MENOR_OU_IGUA(44),
+    OP_MENOR_OU_IGUAL(44),
     OP_DIFERENTE(45),
     OP_VIRGULA(46),
-    OP_PORNTO_VIRGULA(47),
+    OP_PONTO_VIRGULA(47),
     LITERAL(48),
     OP_PONTO(49),
     OP_PONTO_PONTO(50),
@@ -61,6 +61,62 @@ public enum Codigo {
     }
 
     public int getCodigo() {
+        return codigo;
+    }
+
+    public static Codigo valueOfByPalavra(String token) {
+        String tokenUpper = token.toUpperCase();
+
+        if(tokenUpper.equals("+")){
+            return OP_SOMA;
+        }else if(tokenUpper.equals("-")){
+            return OP_SUB;
+        }else if(tokenUpper.equals("*")){
+            return OP_MULT;
+        }else if(tokenUpper.equals("/")){
+            return OP_DIV;
+        }else if(tokenUpper.equals("[")){
+            return OP_COLCHETE_ABRE;
+        }else if(tokenUpper.equals("]")){
+            return OP_COLCHETE_FECHA;
+        }else if(tokenUpper.equals("(")){
+            return OP_PARENTESE_ABRE;
+        }else if(tokenUpper.equals(")")){
+            return OP_PARENTESE_FECHA;
+        }else if(tokenUpper.equals(":=")){
+            return OP_RECEBE;
+        }else if(tokenUpper.equals(":")){
+            return OP_TIPAGEM;
+        }else if(tokenUpper.equals("=")){
+            return OP_IGUAL;
+        }else if(tokenUpper.equals(">")){
+            return OP_MAIOR;
+        }else if(tokenUpper.equals(">=")){
+            return OP_MAIOR_OU_IGUAL;
+        }else if(tokenUpper.equals("<")){
+            return OP_MENOR;
+        }else if(tokenUpper.equals("<=")){
+            return OP_MENOR_OU_IGUAL;
+        }else if(tokenUpper.equals("<>")){
+            return OP_DIFERENTE;
+        }else if(tokenUpper.equals(",")){
+            return OP_VIRGULA;
+        }else if(tokenUpper.equals(";")){
+            return OP_PONTO_VIRGULA;
+        }else if(tokenUpper.equals(".")){
+            return OP_PONTO;
+        }else if(tokenUpper.equals("..")){
+            return OP_PONTO_PONTO;
+        }else if(tokenUpper.equals("$")){
+            return OP_CIFRAO;
+        }
+
+        Codigo codigo = valueOf(tokenUpper);
+
+        if(codigo == null){
+            return IDENTIFICADOR;
+        }
+
         return codigo;
     }
 }

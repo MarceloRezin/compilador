@@ -1,5 +1,9 @@
 package enuns;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 public enum Codigo {
 
     PROGRAM(1),
@@ -56,6 +60,35 @@ public enum Codigo {
 
     private int codigo;
 
+    //Otimização para encontrar operadores especiais
+    private static final Map<String, Codigo> delimitadores;
+    static {
+        HashMap<String, Codigo> tmp = new HashMap<>();
+        tmp.put("+", OP_SOMA);
+        tmp.put("-", OP_SUB);
+        tmp.put("*", OP_MULT);
+        tmp.put("/", OP_DIV);
+        tmp.put("[", OP_COLCHETE_ABRE);
+        tmp.put("]", OP_COLCHETE_FECHA);
+        tmp.put("(", OP_PARENTESE_ABRE);
+        tmp.put(")", OP_PARENTESE_FECHA);
+        tmp.put(":=", OP_RECEBE);
+        tmp.put(":", OP_TIPAGEM);
+        tmp.put("=", OP_IGUAL);
+        tmp.put(">", OP_MAIOR);
+        tmp.put(">=", OP_MAIOR_OU_IGUAL);
+        tmp.put("<", OP_MENOR);
+        tmp.put("<=", OP_MENOR_OU_IGUAL);
+        tmp.put("<>", OP_DIFERENTE);
+        tmp.put(",", OP_VIRGULA);
+        tmp.put(";", OP_PONTO_VIRGULA);
+        tmp.put(".", OP_PONTO);
+        tmp.put("..", OP_PONTO_PONTO);
+        tmp.put("$", OP_CIFRAO);
+
+        delimitadores = Collections.unmodifiableMap(tmp);
+    }
+
     Codigo(int codigo){
         this.codigo = codigo;
     }
@@ -67,51 +100,15 @@ public enum Codigo {
     public static Codigo valueOfByPalavra(String token) {
         String tokenUpper = token.toUpperCase();
 
-        if(tokenUpper.equals("+")){
-            return OP_SOMA;
-        }else if(tokenUpper.equals("-")){
-            return OP_SUB;
-        }else if(tokenUpper.equals("*")){
-            return OP_MULT;
-        }else if(tokenUpper.equals("/")){
-            return OP_DIV;
-        }else if(tokenUpper.equals("[")){
-            return OP_COLCHETE_ABRE;
-        }else if(tokenUpper.equals("]")){
-            return OP_COLCHETE_FECHA;
-        }else if(tokenUpper.equals("(")){
-            return OP_PARENTESE_ABRE;
-        }else if(tokenUpper.equals(")")){
-            return OP_PARENTESE_FECHA;
-        }else if(tokenUpper.equals(":=")){
-            return OP_RECEBE;
-        }else if(tokenUpper.equals(":")){
-            return OP_TIPAGEM;
-        }else if(tokenUpper.equals("=")){
-            return OP_IGUAL;
-        }else if(tokenUpper.equals(">")){
-            return OP_MAIOR;
-        }else if(tokenUpper.equals(">=")){
-            return OP_MAIOR_OU_IGUAL;
-        }else if(tokenUpper.equals("<")){
-            return OP_MENOR;
-        }else if(tokenUpper.equals("<=")){
-            return OP_MENOR_OU_IGUAL;
-        }else if(tokenUpper.equals("<>")){
-            return OP_DIFERENTE;
-        }else if(tokenUpper.equals(",")){
-            return OP_VIRGULA;
-        }else if(tokenUpper.equals(";")){
-            return OP_PONTO_VIRGULA;
-        }else if(tokenUpper.equals(".")){
-            return OP_PONTO;
-        }else if(tokenUpper.equals("..")){
-            return OP_PONTO_PONTO;
-        }else if(tokenUpper.equals("$")){
-            return OP_CIFRAO;
+        //Procura por delimitadores
+        Codigo codigo = delimitadores.get(token);
+
+        if(codigo != null){
+            return codigo;
         }
 
-        Codigo codigo = valueOf(tokenUpper);
+        //Procura por palavras reservadas
+        codigo = valueOf(tokenUpper);
 
         if(codigo == null){
             return IDENTIFICADOR;

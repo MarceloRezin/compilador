@@ -5,8 +5,6 @@ import token.Token;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Stack;
 
 public class Automatos {
@@ -16,9 +14,12 @@ public class Automatos {
         int caracterLido = inputstream.read();
         int caracterProximo = inputstream.read();
 
-
         Stack<Token> tokens = new Stack<>();
         while (caracterLido != -1) {
+
+            if(isEspaco(caracterLido)){
+                continue;
+            }
 
             boolean isCaracter = isCaracter(caracterLido);
             boolean isDigito = isDigito(caracterLido);
@@ -26,7 +27,7 @@ public class Automatos {
 
             StringBuilder buiderPalavra = new StringBuilder();
 
-            if (isCaracter) {
+            if (isCaracter) { //CARACTERES
                 boolean temDigito = isDigito;
 
                 while(isCaracter || isDigito){
@@ -51,7 +52,7 @@ public class Automatos {
                     tokens.push(new Token(palavra));
                 }
 
-            } else if (isDigito) {
+            } else if (isDigito) { //DIGITOS
 
                 while (isDigito){
                     buiderPalavra.append(caracterLido);
@@ -67,9 +68,31 @@ public class Automatos {
 
                 tokens.push(new Token(buiderPalavra.toString(), Codigo.INTEIRO));
 
-            } else if (isDelimitador) {
+            } else if (isDelimitador) { //DELIMITADORES
                 while (isDelimitador){
                     buiderPalavra.append(caracterLido);
+                    if(caracterLido == 39){ // '
+
+                        do{
+
+                        } while (caracterProximo != 39){
+                            buiderPalavra.append(caracterLido);
+
+                            caracterLido = caracterProximo;
+                            caracterProximo = inputstream.read();
+                        }
+
+                        tokens.push(new Token(buiderPalavra.toString(), Codigo.LITERAL));
+                        tokens.push(new Token(Codigo.));
+
+                    }else if(caracterLido == 40){ // (
+
+                    }else{
+                        if(!isDelimitador(caracterProximo)){
+                            tokens.push(new Token(buiderPalavra.toString()));
+                            break;
+                        }
+                    }
 
                     caracterLido = caracterProximo;
                     caracterProximo = inputstream.read();
@@ -94,7 +117,7 @@ public class Automatos {
 
     //DELIMITADORES: $ (-/ :-> [ ]
     private boolean isDelimitador(int caracter){
-        return caracter == 36 || (caracter > 39 && caracter < 48) || (caracter > 57 && caracter < 63) || caracter == 91 || caracter == 93;
+        return caracter == 36 || (caracter > 38 && caracter < 48) || (caracter > 57 && caracter < 63) || caracter == 91 || caracter == 93;
     }
 
     //ESPACO

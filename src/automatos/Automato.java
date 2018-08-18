@@ -66,6 +66,10 @@ public class Automato {
             if(tipo == Tipo.OPERADOR){
                 return new Token(palavra, Codigo.getByOperador(palavra));
             }
+
+            if(tipo == Tipo.DIGITO){
+                return new Token(palavra, Codigo.INTEIRO);
+            }
         }
 
         return new Token(palavra);

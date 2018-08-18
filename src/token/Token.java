@@ -42,4 +42,9 @@ public class Token {
     public void setCodigo(Codigo codigo) {
         this.codigo = codigo;
     }
+
+    @Override
+    public String toString() {
+        return codigo.toString() + " " + palavra;
+    }
 }

@@ -106,14 +106,16 @@ public enum Codigo {
         String tokenUpper = token.toUpperCase();
 
         //Procura por delimitadores
-        Codigo codigo = delimitadores.get(token);
+        Codigo codigo = getByOperador(tokenUpper);
 
         if(codigo != null){
             return codigo;
         }
 
         //Procura por palavras reservadas
-        codigo = valueOf(tokenUpper);
+        try {
+            codigo = valueOf(tokenUpper);
+        }catch (IllegalArgumentException e){}
 
         if(codigo == null){
             return IDENTIFICADOR;
@@ -124,5 +126,9 @@ public enum Codigo {
 
     public String getCaracter() {
         return caracter;
+    }
+
+    public static Codigo getByOperador(String palavra){
+        return delimitadores.get(palavra);
     }
 }

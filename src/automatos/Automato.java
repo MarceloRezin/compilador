@@ -3,6 +3,7 @@ package automatos;
 
 import enuns.Codigo;
 import enuns.Tipo;
+import exceptions.AnaliseLexicaException;
 import token.Token;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,7 +23,7 @@ public class Automato {
         }
     }
 
-    public Token executar(InputStream inputStream) throws IOException{
+    public Token executar(InputStream inputStream) throws IOException, AnaliseLexicaException{
 
         Estado estadoAtual = estadoInicial;
 
@@ -51,7 +52,7 @@ public class Automato {
         return retorno(estadoAtual, builderPalavra.toString());
     }
 
-    private Token retorno(Estado estadoFinal, String palavra){
+    private Token retorno(Estado estadoFinal, String palavra) throws AnaliseLexicaException{
         Tipo tipo = estadoFinal.getRetornoEspecifico();
 
         if(tipo != null){
@@ -69,6 +70,10 @@ public class Automato {
 
             if(tipo == Tipo.DIGITO){
                 return new Token(palavra, Codigo.INTEIRO);
+            }
+
+            if(tipo == Tipo.ERRO){
+                throw new AnaliseLexicaException("Número inválido!");
             }
         }
 

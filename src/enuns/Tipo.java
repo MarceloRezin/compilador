@@ -9,10 +9,14 @@ public enum Tipo {
     OPERADOR,
     ESPACO,
 
+    COMENTARIO,
+    LITERAL,
+
     IDENTIFICADOR,
     KEYWORD,
 
-    FIM; //Representa o fim do arquivo
+    FIM, //Representa o fim do arquivo
+    ERRO;//Algum erro pego pela analise lexica
 
     public static Tipo valueOfBy(Integer caracter){
         if(caracter == -1){
@@ -31,6 +35,14 @@ public enum Tipo {
             return OPERADOR;
         }
 
-        return ESPACO;
+        if(CharUtils.isAspaSimples(caracter)){
+            return LITERAL;
+        }
+
+        if(CharUtils.isEspaco(caracter)){
+            return ESPACO;
+        }
+
+        return null;
     }
 }

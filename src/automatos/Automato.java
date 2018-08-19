@@ -2,7 +2,8 @@ package automatos;
 
 import arquivo.Leitor;
 import enuns.Codigo;
-import enuns.Tipo;
+import enuns.TipoEntrada;
+import enuns.TipoRetorno;
 import exceptions.AnaliseLexicaException;
 import token.Token;
 import java.io.IOException;
@@ -26,15 +27,19 @@ public class Automato {
 
         Estado estadoAtual = estadoInicial;
 
-//        Integer proximoCarcter = leitor.getProximoCaracter();
-
         StringBuilder builderPalavra = new StringBuilder();
 
         while (true) {
             Integer caracterAtual = leitor.getCaracterLido();
-            Tipo tipo = Tipo.valueOfBy(caracterAtual);
+            char entradaChar = (char) caracterAtual.intValue();
 
-            Estado estado = estadoAtual.getEstado(tipo);
+            Object entrada = TipoEntrada.valueOfByCaracter(caracterAtual);
+
+            if(entrada == null){
+                entrada = Character.toString(entradaChar);
+            }
+
+            Estado estado = estadoAtual.getEstado(entrada);
 
             if(estado != null){
                 estadoAtual = estado;
@@ -43,7 +48,7 @@ public class Automato {
                     break;
                 }
 
-                builderPalavra.append((char) caracterAtual.intValue());
+                builderPalavra.append(entradaChar);
             }
 
             leitor.lerProximo();
@@ -53,36 +58,40 @@ public class Automato {
     }
 
     private Token retorno(Estado estadoFinal, String palavra) throws AnaliseLexicaException{
-        Tipo tipo = estadoFinal.getRetornoEspecifico();
+        TipoRetorno tipo = estadoFinal.getRetornoEspecifico();
 
         if(tipo != null){
-            if(tipo == Tipo.IDENTIFICADOR){
+            if(tipo == TipoRetorno.IGNORAR){
+                return Token.tokenIgnorado();
+            }
+
+            if(tipo == TipoRetorno.IDENTIFICADOR){
                 return new Token(palavra, Codigo.IDENTIFICADOR);
             }
 
-            if(tipo == Tipo.KEYWORD){
-                return new Token(palavra, Codigo.valueOf(palavra.toUpperCase()));
-            }
+//            if(tipo == Tipo.KEYWORD){
+//                return new Token(palavra, Codigo.valueOf(palavra.toUpperCase()));
+//            }
 
-            if(tipo == Tipo.OPERADOR){
+            if(tipo == TipoRetorno.OPERADOR){
                 return new Token(palavra, Codigo.getByOperador(palavra));
             }
 
-            if(tipo == Tipo.DIGITO){
+            if(tipo == TipoRetorno.INTEIRO){
                 return new Token(palavra, Codigo.INTEIRO);
             }
 
-            if(tipo == Tipo.LITERAL){
+            if(tipo == TipoRetorno.LITERAL){
                 return new Token(palavra, Codigo.LITERAL);
             }
-
-            if(tipo == Tipo.ERRO){
+//
+            if(tipo == TipoRetorno.ERRO){
                 throw new AnaliseLexicaException("Número inválido!");
             }
-
-            if(tipo == Tipo.ESPACO){
-                return null;
-            }
+//
+//            if(tipo == Tipo.ESPACO){
+//                return null;
+//            }
         }
 
         return new Token(palavra);
@@ -100,16 +109,16 @@ public class Automato {
 //                continue;
 //            }
 //
-//            boolean isCaracter = isCaracter(caracterLido);
+//            boolean isLetra = isLetra(caracterLido);
 //            boolean isDigito = isDigito(caracterLido);
-//            boolean isDelimitador = isDelimitador(caracterLido);
+//            boolean isOperador = isOperador(caracterLido);
 //
 //            StringBuilder buiderPalavra = new StringBuilder();
 //
-//            if (isCaracter) { //CARACTERES
+//            if (isLetra) { //CARACTERES
 //                boolean temDigito = isDigito;
 //
-//                while(isCaracter || isDigito){
+//                while(isLetra || isDigito){
 //                    buiderPalavra.append((char) caracterLido);
 //
 //                    if(!temDigito && isDigito){
@@ -119,7 +128,7 @@ public class Automato {
 //                    caracterLido = caracterProximo;
 //                    caracterProximo = inputstream.read();
 //
-//                    isCaracter = isCaracter(caracterLido);
+//                    isLetra = isLetra(caracterLido);
 //                    isDigito = isDigito(caracterLido);
 //                }
 //
@@ -140,15 +149,15 @@ public class Automato {
 //                    caracterProximo = inputstream.read();
 //                    isDigito = isDigito(caracterLido);
 //
-//                    if(isCaracter(caracterProximo)){
+//                    if(isLetra(caracterProximo)){
 //                        throw new Exception("NUmero invalido");
 //                    }
 //                }
 //
 //                tokens.push(new Token(buiderPalavra.toString(), Codigo.INTEIRO));
 //
-//            } else if (isDelimitador) { //DELIMITADORES
-//                while (isDelimitador){
+//            } else if (isOperador) { //DELIMITADORES
+//                while (isOperador){
 //                    buiderPalavra.append(caracterLido);
 //                    if(caracterLido == 39){ // '
 //
@@ -167,7 +176,7 @@ public class Automato {
 //                    }else if(caracterLido == 40){ // (
 //
 //                    }else{
-//                        if(!isDelimitador(caracterProximo)){
+//                        if(!isOperador(caracterProximo)){
 //                            tokens.push(new Token(buiderPalavra.toString()));
 //                            break;
 //                        }
@@ -175,7 +184,7 @@ public class Automato {
 //
 //                    caracterLido = caracterProximo;
 //                    caracterProximo = inputstream.read();
-//                    isDelimitador = isDelimitador(caracterLido);
+//                    isOperador = isOperador(caracterLido);
 //                }
 //            }
 //

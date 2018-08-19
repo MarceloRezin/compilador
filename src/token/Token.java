@@ -47,4 +47,12 @@ public class Token {
     public String toString() {
         return codigo.toString() + " " + palavra;
     }
+
+    public static Token tokenIgnorado(){
+        return new Token(null, null);
+    }
+
+    public boolean isIgnorado(){
+        return palavra == null && codigo == null;
+    }
 }

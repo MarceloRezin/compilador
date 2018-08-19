@@ -1,12 +1,11 @@
 package automatos;
 
-
+import arquivo.Leitor;
 import enuns.Codigo;
 import enuns.Tipo;
 import exceptions.AnaliseLexicaException;
 import token.Token;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,7 +14,7 @@ public class Automato {
     private Estado estadoInicial;
     private Set<Estado> estadoFinais = new HashSet<>();
 
-    public Automato(Estado estadoInicial, Estado ... estadoFinais) {
+    public Automato(Estado estadoInicial, Estado... estadoFinais) {
         this.estadoInicial = estadoInicial;
 
         for (int i=0; i<estadoFinais.length; i++){
@@ -23,15 +22,16 @@ public class Automato {
         }
     }
 
-    public Token executar(InputStream inputStream) throws IOException, AnaliseLexicaException{
+    public Token executar(Leitor leitor) throws IOException, AnaliseLexicaException{
 
         Estado estadoAtual = estadoInicial;
 
-        Integer caracterAtual = inputStream.read();
+//        Integer proximoCarcter = leitor.getProximoCaracter();
 
         StringBuilder builderPalavra = new StringBuilder();
 
         while (true) {
+            Integer caracterAtual = leitor.getCaracterLido();
             Tipo tipo = Tipo.valueOfBy(caracterAtual);
 
             Estado estado = estadoAtual.getEstado(tipo);
@@ -46,7 +46,7 @@ public class Automato {
                 builderPalavra.append((char) caracterAtual.intValue());
             }
 
-            caracterAtual = inputStream.read();
+            leitor.lerProximo();
         }
 
         return retorno(estadoAtual, builderPalavra.toString());
@@ -72,8 +72,16 @@ public class Automato {
                 return new Token(palavra, Codigo.INTEIRO);
             }
 
+            if(tipo == Tipo.LITERAL){
+                return new Token(palavra, Codigo.LITERAL);
+            }
+
             if(tipo == Tipo.ERRO){
                 throw new AnaliseLexicaException("Número inválido!");
+            }
+
+            if(tipo == Tipo.ESPACO){
+                return null;
             }
         }
 

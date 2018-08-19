@@ -15,11 +15,15 @@ public final class CharUtils {
 
     //DELIMITADORES: $ (-/ :-> [ ]
     public static boolean isDelimitador(Integer caracter){
-        return caracter == 36 || (caracter > 38 && caracter < 48) || (caracter > 57 && caracter < 63) || caracter == 91 || caracter == 93;
+        return caracter == 36 || (caracter > 39 && caracter < 48) || (caracter > 57 && caracter < 63) || caracter == 91 || caracter == 93;
     }
 
     //ESPACO
     public static boolean isEspaco(Integer caracter){
-        return caracter == 32;
+        return caracter == 32 || caracter == 9;
+    }
+
+    public static boolean isAspaSimples(Integer caracter){
+        return caracter == 39;
     }
 }

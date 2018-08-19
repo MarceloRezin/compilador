@@ -1,18 +1,20 @@
 package automatos;
 
-import enuns.Tipo;
+import enuns.TipoEntrada;
+import enuns.TipoRetorno;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Estado {
     private Map<Object, Estado> transicoes = new HashMap<>();
-    private Tipo retornoEspecifico;
+    private Estado excecao;
+    private TipoRetorno retornoEspecifico;
 
     public Estado() {}
 
     //Utilizado em estados finais com retorno predefinido
-    public Estado(Tipo retornoEspecifico) {
+    public Estado(TipoRetorno retornoEspecifico) {
         this.retornoEspecifico = retornoEspecifico;
     }
 
@@ -21,10 +23,27 @@ public class Estado {
     }
 
     public Estado getEstado(Object entrada){
-        return transicoes.get(entrada);
+
+        Estado estado = transicoes.get(TipoEntrada.QUALQUER);
+
+        if(estado != null){
+            return estado;
+        }
+
+        estado = transicoes.get(entrada);
+
+        if(estado == null && excecao != null){
+            return excecao;
+        }
+
+        return estado;
     }
 
-    public Tipo getRetornoEspecifico() {
+    public TipoRetorno getRetornoEspecifico() {
         return retornoEspecifico;
+    }
+
+    public void setExcecao(Estado excecao) {
+        this.excecao = excecao;
     }
 }

@@ -4,7 +4,7 @@ package utils;
 public final class CharUtils {
 
     //LETRAS: A-Za-z
-    public static boolean isCaracter(Integer caracter){
+    public static boolean isLetra(Integer caracter){
         return  (caracter > 64 && caracter < 90) || (caracter > 96 && caracter < 123);
     }
 
@@ -13,8 +13,8 @@ public final class CharUtils {
         return caracter > 47 && caracter < 58;
     }
 
-    //DELIMITADORES: $ (-/ :-> [ ]
-    public static boolean isDelimitador(Integer caracter){
+    //DELIMITADORES: $ '-/ :-> [ ]
+    public static boolean isOperador(Integer caracter){
         return caracter == 36 || (caracter > 39 && caracter < 48) || (caracter > 57 && caracter < 63) || caracter == 91 || caracter == 93;
     }
 

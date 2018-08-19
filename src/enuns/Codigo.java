@@ -54,7 +54,7 @@ public enum Codigo {
     OP_VIRGULA(46, ","),
     OP_PONTO_VIRGULA(47, ";"),
     LITERAL(48),
-    OP_PONTO(49, ","),
+    OP_PONTO(49, "."),
     OP_PONTO_PONTO(50, ".."),
     OP_CIFRAO(51, "$");
 
@@ -92,6 +92,7 @@ public enum Codigo {
 
     Codigo(int codigo, String caracter){
         this.codigo = codigo;
+        this.caracter = caracter;
     }
 
     Codigo(int codigo){

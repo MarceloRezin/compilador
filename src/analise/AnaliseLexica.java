@@ -94,30 +94,26 @@ public class AnaliseLexica {
         Estado e15 = new Estado(TipoRetorno.LITERAL);
 
         e1.addTransicao("'", e13);
+        e13.setExcecao(e13);
         e13.addTransicao("'",   e14);
-        e13.addTransicao(TipoEntrada.LETRA, e13);
-        e13.addTransicao(TipoEntrada.DIGITO, e13);
-        e13.addTransicao(TipoEntrada.ESPACO, e13);
-        e13.addTransicao(TipoEntrada.OPERADOR, e13);
         e14.addTransicao(TipoEntrada.QUALQUER, e15);
 
         //Identificacao de comentarios
         Estado e16 = new Estado();
         Estado e17 = new Estado();
         Estado e18 = new Estado();
-        Estado e19 = new Estado(TipoRetorno.IGNORAR);
+        Estado e19 = new Estado();
+        Estado e20 = new Estado(TipoRetorno.IGNORAR);
 
         e1.addTransicao("(", e16);
         e16.setExcecao(e12);
         e16.addTransicao("*", e17);
-        e17.addTransicao(TipoEntrada.LETRA, e17);
-        e17.addTransicao(TipoEntrada.DIGITO, e17);
-        e17.addTransicao(TipoEntrada.ESPACO, e17);
-        e17.addTransicao(TipoEntrada.OPERADOR, e17);
+        e17.setExcecao(e17);
         e17.addTransicao("*", e18);
-        e18.setExcecao(e17);
         e18.addTransicao(")", e19);
+        e18.setExcecao(e17);
+        e19.addTransicao(TipoEntrada.QUALQUER, e20);
 
-       return new Automato(e1, e3, e5, e7, e9, e10, e12, e15, e19);
+       return new Automato(e1, e3, e5, e7, e9, e10, e12, e15, e20);
     }
 }

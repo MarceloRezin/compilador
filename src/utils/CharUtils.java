@@ -5,7 +5,7 @@ public final class CharUtils {
 
     //LETRAS: A-Za-z
     public static boolean isLetra(Integer caracter){
-        return  (caracter > 64 && caracter < 90) || (caracter > 96 && caracter < 123);
+        return  (caracter > 64 && caracter < 91) || (caracter > 96 && caracter < 123);
     }
 
     //DIGITOS: 0-9
@@ -15,12 +15,12 @@ public final class CharUtils {
 
     //DELIMITADORES: $ '-/ :-> [ ]
     public static boolean isOperador(Integer caracter){
-        return caracter == 36 || (caracter > 39 && caracter < 48) || (caracter > 57 && caracter < 63) || caracter == 91 || caracter == 93;
+        return caracter == 36 || (caracter > 42 && caracter < 48) || (caracter > 57 && caracter < 63) || caracter == 91 || caracter == 93;
     }
 
     //ESPACO
     public static boolean isEspaco(Integer caracter){
-        return caracter == 32 || caracter == 9;
+        return caracter == 32 || caracter == 9 || caracter == 10;
     }
 
     public static boolean isAspaSimples(Integer caracter){

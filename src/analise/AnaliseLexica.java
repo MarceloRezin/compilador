@@ -79,16 +79,20 @@ public class AnaliseLexica {
         e8.setExcecao(e9);
         e8.addTransicao(TipoEntrada.LETRA, e10);
 
-        //Identificacao de operadores, literais e comentarios
+        //Identificacao de operadores
         Estado e11 = new Estado();
         Estado e12 = new Estado(TipoRetorno.OPERADOR);
+//
+        e1.addTransicao(TipoEntrada.OPERADOR, e11);
+        e1.addTransicao(")", e11);
+        e1.addTransicao("*", e11);
+        e11.addTransicao(TipoEntrada.QUALQUER, e12);
+
+        //Identificacao de literias
         Estado e13 = new Estado();
         Estado e14 = new Estado();
         Estado e15 = new Estado(TipoRetorno.LITERAL);
-//
-        e1.addTransicao(TipoEntrada.OPERADOR, e11);
-        e11.addTransicao(TipoEntrada.QUALQUER, e12);
-//        e11.setExcecao(e12);
+
         e1.addTransicao("'", e13);
         e13.addTransicao("'",   e14);
         e13.addTransicao(TipoEntrada.LETRA, e13);
@@ -96,22 +100,24 @@ public class AnaliseLexica {
         e13.addTransicao(TipoEntrada.ESPACO, e13);
         e13.addTransicao(TipoEntrada.OPERADOR, e13);
         e14.addTransicao(TipoEntrada.QUALQUER, e15);
-//        e9.addTransicao(Tipo.ESPACO, e9);
-//        e9.addTransicao(Tipo.LITERAL, e10);
-//        e10.addTransicao(Tipo.LITERAL, e11);
-//        e10.addTransicao(Tipo.OPERADOR, e11);
-//        e10.addTransicao(Tipo.CARACTER, e11);
-//        e10.addTransicao(Tipo.DIGITO, e11);
-//        e10.addTransicao(Tipo.ESPACO, e11);
-//        e10.addTransicao(Tipo.FIM, e11);
-//
-//        e12.addTransicao(Tipo.LITERAL, e13);
-//        e12.addTransicao(Tipo.OPERADOR, e13);
-//        e12.addTransicao(Tipo.CARACTER, e13);
-//        e12.addTransicao(Tipo.DIGITO, e13);
-//        e12.addTransicao(Tipo.ESPACO, e13);
-//        e12.addTransicao(Tipo.FIM, e13);
 
-       return new Automato(e1, e3, e5, e7, e9, e10, e12, e15);
+        //Identificacao de comentarios
+        Estado e16 = new Estado();
+        Estado e17 = new Estado();
+        Estado e18 = new Estado();
+        Estado e19 = new Estado(TipoRetorno.IGNORAR);
+
+        e1.addTransicao("(", e16);
+        e16.setExcecao(e12);
+        e16.addTransicao("*", e17);
+        e17.addTransicao(TipoEntrada.LETRA, e17);
+        e17.addTransicao(TipoEntrada.DIGITO, e17);
+        e17.addTransicao(TipoEntrada.ESPACO, e17);
+        e17.addTransicao(TipoEntrada.OPERADOR, e17);
+        e17.addTransicao("*", e18);
+        e18.setExcecao(e17);
+        e18.addTransicao(")", e19);
+
+       return new Automato(e1, e3, e5, e7, e9, e10, e12, e15, e19);
     }
 }

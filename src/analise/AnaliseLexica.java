@@ -94,6 +94,7 @@ public class AnaliseLexica {
         e13.addTransicao(TipoEntrada.LETRA, e13);
         e13.addTransicao(TipoEntrada.DIGITO, e13);
         e13.addTransicao(TipoEntrada.ESPACO, e13);
+        e13.addTransicao(TipoEntrada.OPERADOR, e13);
         e14.addTransicao(TipoEntrada.QUALQUER, e15);
 //        e9.addTransicao(Tipo.ESPACO, e9);
 //        e9.addTransicao(Tipo.LITERAL, e10);

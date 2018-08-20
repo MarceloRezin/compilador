@@ -22,8 +22,4 @@ public final class CharUtils {
     public static boolean isEspaco(Integer caracter){
         return caracter == 32 || caracter == 9 || caracter == 10;
     }
-
-    public static boolean isAspaSimples(Integer caracter){
-        return caracter == 39;
-    }
 }

@@ -82,10 +82,25 @@ public class AnaliseLexica {
         //Identificacao de operadores
         Estado e11 = new Estado();
         Estado e12 = new Estado(TipoRetorno.OPERADOR);
+        Estado e21 = new Estado();
+        Estado e22 = new Estado();
+        Estado e23 = new Estado();
 //
         e1.addTransicao(TipoEntrada.OPERADOR, e11);
         e1.addTransicao(")", e11);
         e1.addTransicao("*", e11);
+        e1.addTransicao(":", e21);
+        e21.addTransicao("=", e11);
+        e21.setExcecao(e12);
+        e1.addTransicao("=", e11);
+        e1.addTransicao("<", e22);
+        e22.addTransicao("=", e11);
+        e22.addTransicao(">", e11);
+        e22.setExcecao(e12);
+        e1.addTransicao(">", e21);
+        e1.addTransicao(".", e23);
+        e23.setExcecao(e12);
+        e23.addTransicao(".", e11);
         e11.addTransicao(TipoEntrada.QUALQUER, e12);
 
         //Identificacao de literias

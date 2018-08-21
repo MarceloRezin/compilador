@@ -85,7 +85,7 @@ public class AnaliseLexica {
         Estado e21 = new Estado();
         Estado e22 = new Estado();
         Estado e23 = new Estado();
-//
+
         e1.addTransicao(TipoEntrada.OPERADOR, e11);
         e1.addTransicao(")", e11);
         e1.addTransicao("*", e11);

@@ -13,9 +13,9 @@ public final class CharUtils {
         return caracter > 47 && caracter < 58;
     }
 
-    //DELIMITADORES: $ '-/ :-> [ ]
+    //DELIMITADORES
     public static boolean isOperador(Integer caracter){
-        return caracter == 36 || (caracter > 42 && caracter < 48) || (caracter > 57 && caracter < 63) || caracter == 91 || caracter == 93;
+        return caracter == 36 || (caracter > 42 && caracter < 46) || caracter == 47 || caracter == 59 || caracter == 91 || caracter == 93;
     }
 
     //ESPACO

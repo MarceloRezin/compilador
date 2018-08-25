@@ -1,11 +1,17 @@
 package tela;
 
+import arquivo.Arquivo;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class TelaEditor extends javax.swing.JFrame {
+
+    private InputStream arquivoAberto;
 
     public TelaEditor() {
         initComponents();
@@ -62,7 +68,6 @@ public class TelaEditor extends javax.swing.JFrame {
 
         tabelaTokens.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{
-
                 },
                 new String[]{
                         "Código", "Palavras"
@@ -185,7 +190,7 @@ public class TelaEditor extends javax.swing.JFrame {
         }
     }
 
-    public static void lerArq(JTextPane txtEditor) {
+    public void lerArq(JTextPane txtEditor) {
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Extensão .lms", "lms");
         chooser.addChoosableFileFilter(filter);
@@ -193,8 +198,13 @@ public class TelaEditor extends javax.swing.JFrame {
         chooser.setAcceptAllFileFilterUsed(false);
         int retorno = chooser.showOpenDialog(chooser);
         if (retorno == JFileChooser.APPROVE_OPTION) {
-            //arq.ler(chooser.getSelectedFile().getAbsolutePath());//Envia o endereço do arquivo.
-            //txtEditor.setText(arg.get()); //seta o txtEditor com texto salvo do arquivo. Criar o metodo get que retorna a String na classe Arquivo
+            try {
+                 arquivoAberto = Arquivo.ler(chooser.getSelectedFile().getAbsolutePath());//Envia o endereço do arquivo.
+                txtEditor.setText(Arquivo.convert(arquivoAberto)); //seta o txtEditor com texto salvo do arquivo. Criar o metodo get que retorna a String na classe Arquivo
+
+            }catch (IOException e){
+                e.printStackTrace();
+            }
         }
     }
 

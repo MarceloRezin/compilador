@@ -1,11 +1,11 @@
 package arquivo;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.stream.Collectors;
 
 public class Arquivo {
 
@@ -17,4 +17,11 @@ public class Arquivo {
     public static InputStream ler(String dir) throws IOException {
         return new FileInputStream(dir);
     }
+
+    public static String convert(InputStream inputStream) throws IOException {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, Charset.defaultCharset()))) {
+            return br.lines().collect(Collectors.joining(System.lineSeparator()));
+        }
+    }
+
 }

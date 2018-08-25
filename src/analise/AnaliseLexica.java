@@ -30,16 +30,6 @@ public class AnaliseLexica {
             }
         }
 
-        Stack<Token> pilhaInvertida = new Stack<>();
-
-        while (tokens.size() > 0){
-            pilhaInvertida.push(tokens.pop());
-        }
-
-        while (pilhaInvertida.size() > 0){
-            System.out.println(pilhaInvertida.pop());
-        }
-
         return tokens;
     }
 

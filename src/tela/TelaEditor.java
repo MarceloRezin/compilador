@@ -7,8 +7,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class TelaEditor extends javax.swing.JFrame {
 
-public TelaEditor() {        
-       initComponents();
+    public TelaEditor() {
+        initComponents();
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -61,26 +61,26 @@ public TelaEditor() {
         jScrollPane2.setMaximumSize(new java.awt.Dimension(32732167, 331232767));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+                new Object[][]{
 
-            },
-            new String [] {
-                "Código", "Palavras"
-            }
+                },
+                new String[]{
+                        "Código", "Palavras"
+                }
         ) {
-            Class[] types = new Class [] {
-                String.class, String.class
+            Class[] types = new Class[]{
+                    String.class, String.class
             };
-            boolean[] canEdit = new boolean [] {
-                false, false
+            boolean[] canEdit = new boolean[]{
+                    false, false
             };
 
             public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+                return types[columnIndex];
             }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
         jScrollPane2.setViewportView(jTable1);
@@ -88,42 +88,42 @@ public TelaEditor() {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnOpen, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnRun, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10))))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(btnOpen, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(btnRun, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(10, 10, 10))))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnNew, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(btnOpen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRun, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(btnNew, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                                        .addComponent(btnOpen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnCancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnRun, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(10, 10, 10)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap())
         );
 
         pack();
@@ -131,26 +131,22 @@ public TelaEditor() {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
-        // TODO add your handling code here:
-        if(!txtEditor.getText().equals("")) {
-            Editado(txtEditor);
-	}
+        if (!txtEditor.getText().equals("")) {
+            editado(txtEditor);
+        }
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void btnOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenActionPerformed
-        // TODO add your handling code here:
-        if(!txtEditor.getText().equals("")) {
-            Editado(txtEditor);
-            LerArq(txtEditor);
-	}
-	else {
-            LerArq(txtEditor);
-	}
+        if (!txtEditor.getText().equals("")) {
+            editado(txtEditor);
+            lerArq(txtEditor);
+        } else {
+            lerArq(txtEditor);
+        }
     }//GEN-LAST:event_btnOpenActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // TODO add your handling code here:
-        SalvarArq(txtEditor.getText());
+        salvarArq(txtEditor.getText());
     }//GEN-LAST:event_btnSaveActionPerformed
 
     public static void main(String args[]) {
@@ -159,11 +155,11 @@ public TelaEditor() {
             public void run() {
                 try {
                     javax.swing.UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
                     Logger.getLogger(TelaEditor.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 new TelaEditor().setVisible(true);
-                
+
             }
         });
     }
@@ -180,35 +176,34 @@ public TelaEditor() {
     private JTextPane txtEditor;
     // End of variables declaration//GEN-END:variables
 
-	public static void SalvarArq(String txtEditor) {
-            JFileChooser fc = new JFileChooser();
-            fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            int res = fc.showSaveDialog(null);
-            if(res == JFileChooser.APPROVE_OPTION){
-        	//arq.gravar(""+fc.getSelectedFile()+"\\"+JOptionPane.showInputDialog("Nome do arquivo:")+".lms",txtEditor);
-            }  
-	}
-	
-	public static void LerArq(JTextPane txtEditor) {
-            JFileChooser chooser = new JFileChooser();
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("Extensão .lms","lms");  
-            chooser.addChoosableFileFilter(filter);
-            chooser.setFileFilter(filter);
-            chooser.setAcceptAllFileFilterUsed(false);
-            int retorno = chooser.showOpenDialog(chooser);
-            if (retorno == JFileChooser.APPROVE_OPTION){
-		//arq.ler(chooser.getSelectedFile().getAbsolutePath());//Envia o endereço do arquivo.
-                //txtEditor.setText(arg.get()); //seta o txtEditor com texto salvo do arquivo. Criar o metodo get que retorna a String na classe Arquivo
-            }
-	}
-	
-	public static void Editado(JTextPane txtEditor) {
-            int op = JOptionPane.showConfirmDialog(null, "Deseja salvar o arquivo?");
-            if(op == 0) {
-		SalvarArq(txtEditor.getText());
-            }
-            else if(op == 1){
-		txtEditor.setText("");						
-            }
-	}
+    public static void salvarArq(String txtEditor) {
+        JFileChooser fc = new JFileChooser();
+        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int res = fc.showSaveDialog(null);
+        if (res == JFileChooser.APPROVE_OPTION) {
+            //arq.gravar(""+fc.getSelectedFile()+"\\"+JOptionPane.showInputDialog("Nome do arquivo:")+".lms",txtEditor);
+        }
+    }
+
+    public static void lerArq(JTextPane txtEditor) {
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Extensão .lms", "lms");
+        chooser.addChoosableFileFilter(filter);
+        chooser.setFileFilter(filter);
+        chooser.setAcceptAllFileFilterUsed(false);
+        int retorno = chooser.showOpenDialog(chooser);
+        if (retorno == JFileChooser.APPROVE_OPTION) {
+            //arq.ler(chooser.getSelectedFile().getAbsolutePath());//Envia o endereço do arquivo.
+            //txtEditor.setText(arg.get()); //seta o txtEditor com texto salvo do arquivo. Criar o metodo get que retorna a String na classe Arquivo
+        }
+    }
+
+    public static void editado(JTextPane txtEditor) {
+        int op = JOptionPane.showConfirmDialog(null, "Deseja salvar o arquivo?");
+        if (op == 0) {
+            salvarArq(txtEditor.getText());
+        } else if (op == 1) {
+            txtEditor.setText("");
+        }
+    }
 }

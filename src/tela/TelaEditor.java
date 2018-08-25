@@ -1,17 +1,22 @@
 package tela;
 
+import analise.AnaliseLexica;
 import arquivo.Arquivo;
+import exceptions.AnaliseLexicaException;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableCellRenderer;
 
 public class TelaEditor extends javax.swing.JFrame {
 
-    private InputStream arquivoAberto;
+    private File arquivoSelecionado;
+    private TokenTableModel modelo = new TokenTableModel(new Stack<>());
 
     public TelaEditor() {
         initComponents();
@@ -28,7 +33,11 @@ public class TelaEditor extends javax.swing.JFrame {
         jScrollPane = new javax.swing.JScrollPane();
         txtEditor = new JTextPane();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tabelaTokens = new javax.swing.JTable();
+        tabelaTokens = new javax.swing.JTable(modelo);
+
+        //Alinha os itens da tabela
+        ((DefaultTableCellRenderer) tabelaTokens.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+        tabelaTokens.setDefaultRenderer(Object.class, new CellRender());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(238, 238, 238));
@@ -58,6 +67,9 @@ public class TelaEditor extends javax.swing.JFrame {
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tela/imagens/x-button.png"))); // NOI18N
 
         btnRun.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tela/imagens/Run.png"))); // NOI18N
+        btnRun.addActionListener( l -> {
+            runAction();
+        });
 
         jScrollPane.setMaximumSize(new java.awt.Dimension(32763217, 32321767));
 
@@ -65,29 +77,6 @@ public class TelaEditor extends javax.swing.JFrame {
         jScrollPane.setViewportView(txtEditor);
 
         jScrollPane2.setMaximumSize(new java.awt.Dimension(32732167, 331232767));
-
-        tabelaTokens.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][]{
-                },
-                new String[]{
-                        "Código", "Palavras"
-                }
-        ) {
-            Class[] types = new Class[]{
-                    String.class, String.class
-            };
-            boolean[] canEdit = new boolean[]{
-                    false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types[columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
-            }
-        });
         jScrollPane2.setViewportView(tabelaTokens);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -136,6 +125,7 @@ public class TelaEditor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
+        arquivoSelecionado = null;
         if (!txtEditor.getText().equals("")) {
             editado(txtEditor);
         }
@@ -153,6 +143,17 @@ public class TelaEditor extends javax.swing.JFrame {
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         salvarArq(txtEditor.getText());
     }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void runAction(){
+        try {
+            modelo = new TokenTableModel(AnaliseLexica.analisar(txtEditor.getText().toCharArray()));
+            tabelaTokens.setModel(modelo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (AnaliseLexicaException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String args[]) {
 
@@ -181,16 +182,30 @@ public class TelaEditor extends javax.swing.JFrame {
     private JTextPane txtEditor;
     // End of variables declaration//GEN-END:variables
 
-    public static void salvarArq(String txtEditor) {
-        JFileChooser fc = new JFileChooser();
-        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        int res = fc.showSaveDialog(null);
-        if (res == JFileChooser.APPROVE_OPTION) {
-            //arq.gravar(""+fc.getSelectedFile()+"\\"+JOptionPane.showInputDialog("Nome do arquivo:")+".lms",txtEditor);
+    public void salvarArq(String txtEditor) {
+
+        if(arquivoSelecionado != null){
+            try {
+                Arquivo.gravar(arquivoSelecionado.getAbsolutePath(), txtEditor.getBytes());
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }else{
+            JFileChooser fc = new JFileChooser();
+            fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int res = fc.showSaveDialog(null);
+            if (res == JFileChooser.APPROVE_OPTION) {
+                try {
+                    arquivoSelecionado = fc.getSelectedFile();
+                    Arquivo.gravar(arquivoSelecionado.getAbsolutePath() + "/"+JOptionPane.showInputDialog("Nome do arquivo:") + ".lms",txtEditor.getBytes());
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
-    public void lerArq(JTextPane txtEditor) {
+    private void lerArq(JTextPane txtEditor) {
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Extensão .lms", "lms");
         chooser.addChoosableFileFilter(filter);
@@ -199,8 +214,8 @@ public class TelaEditor extends javax.swing.JFrame {
         int retorno = chooser.showOpenDialog(chooser);
         if (retorno == JFileChooser.APPROVE_OPTION) {
             try {
-                 arquivoAberto = Arquivo.ler(chooser.getSelectedFile().getAbsolutePath());//Envia o endereço do arquivo.
-                txtEditor.setText(Arquivo.convert(arquivoAberto)); //seta o txtEditor com texto salvo do arquivo. Criar o metodo get que retorna a String na classe Arquivo
+                arquivoSelecionado = chooser.getSelectedFile();
+                txtEditor.setText(Arquivo.convert(Arquivo.ler(arquivoSelecionado.getAbsolutePath()))); //seta o txtEditor com texto salvo do arquivo. Criar o metodo get que retorna a String na classe Arquivo
 
             }catch (IOException e){
                 e.printStackTrace();
@@ -208,7 +223,7 @@ public class TelaEditor extends javax.swing.JFrame {
         }
     }
 
-    public static void editado(JTextPane txtEditor) {
+    private void editado(JTextPane txtEditor) {
         int op = JOptionPane.showConfirmDialog(null, "Deseja salvar o arquivo?");
         if (op == 0) {
             salvarArq(txtEditor.getText());

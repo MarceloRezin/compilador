@@ -7,21 +7,19 @@ import enuns.TipoEntrada;
 import enuns.TipoRetorno;
 import exceptions.AnaliseLexicaException;
 import token.Token;
-
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Stack;
 
 public class AnaliseLexica {
 
-    public static Stack<Token> analisar(InputStream inputStream) throws IOException, AnaliseLexicaException {
-        Leitor leitor = new Leitor(inputStream);
+    public static Stack<Token> analisar(char[] arquivo) throws IOException, AnaliseLexicaException {
+        Leitor leitor = new Leitor(arquivo);
 
         Stack<Token> tokens = new Stack<>();
 
         Automato automato = getAutomato();
 
-        while (leitor.getCaracterLido() > 0){
+        while (leitor.hasNext()){
             Token token = automato.executar(leitor);
             if(token != null){
                 if(!token.isIgnorado()){

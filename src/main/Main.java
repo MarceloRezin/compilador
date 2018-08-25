@@ -18,7 +18,7 @@ public class Main {
 
 
         try {
-            AnaliseLexica.analisar(Arquivo.ler("texto.txt"));
+            AnaliseLexica.analisar(Arquivo.convert(Arquivo.ler("texto.lms")).toCharArray());
         } catch (AnaliseLexicaException e) {
             e.printStackTrace();
         }

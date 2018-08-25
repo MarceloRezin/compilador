@@ -1,30 +1,40 @@
 package arquivo;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 public class Leitor {
 
-    private InputStream inputStream;
-    private Integer caracterLido;
-    private Integer proximoCaracter;
+    private char[] arquivo;
+    private char caracterLido;
+    private char proximoCaracter;
+    private int posicaoLeitura = 0;
 
-    public Leitor(InputStream inputStream) throws IOException {
-        this.inputStream = inputStream;
-        this.caracterLido = inputStream.read();
-        this.proximoCaracter = inputStream.read();
+    public Leitor(char[] arquivo){
+        this.arquivo = arquivo;
+        this.caracterLido = arquivo[posicaoLeitura];
+        proximaLeitura();
+        this.proximoCaracter = arquivo[posicaoLeitura];
     }
 
-    public void lerProximo() throws IOException{
+    public void lerProximo(){
+        proximaLeitura();
         caracterLido = proximoCaracter;
-        proximoCaracter = inputStream.read();
+        proximoCaracter = arquivo[posicaoLeitura];
     }
 
-    public Integer getCaracterLido() {
+    public char getCaracterLido() {
         return caracterLido;
     }
 
-    public Integer getProximoCaracter() {
+    public char getProximoCaracter() {
         return proximoCaracter;
+    }
+
+    public boolean hasNext(){
+        return posicaoLeitura < arquivo.length -1;
+    }
+
+    private void proximaLeitura(){
+        if(hasNext()){
+            posicaoLeitura ++;
+        }
     }
 }

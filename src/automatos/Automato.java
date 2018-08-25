@@ -6,7 +6,6 @@ import enuns.TipoEntrada;
 import enuns.TipoRetorno;
 import exceptions.AnaliseLexicaException;
 import token.Token;
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,20 +22,19 @@ public class Automato {
         }
     }
 
-    public Token executar(Leitor leitor) throws IOException, AnaliseLexicaException{
+    public Token executar(Leitor leitor) throws AnaliseLexicaException{
 
         Estado estadoAtual = estadoInicial;
 
         StringBuilder builderPalavra = new StringBuilder();
 
         while (true) {
-            Integer caracterAtual = leitor.getCaracterLido();
-            char entradaChar = (char) caracterAtual.intValue();
+            char caracterAtual = leitor.getCaracterLido();
 
             Object entrada = TipoEntrada.valueOfByCaracter(caracterAtual);
 
             if(entrada == null){
-                entrada = Character.toString(entradaChar);
+                entrada = Character.toString(caracterAtual);
             }
 
             Estado estado = estadoAtual.getEstado(entrada);
@@ -48,7 +46,7 @@ public class Automato {
                     break;
                 }
 
-                builderPalavra.append(entradaChar);
+                builderPalavra.append(caracterAtual);
             }
 
             leitor.lerProximo();

@@ -11,7 +11,7 @@ public enum TipoEntrada {
     DIGITO,
     OPERADOR;
 
-    public static TipoEntrada valueOfByCaracter(Integer caracter){
+    public static TipoEntrada valueOfByCaracter(char caracter){
         if(caracter == -1){
             return FIM;
         }

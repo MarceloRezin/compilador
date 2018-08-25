@@ -9,9 +9,9 @@ import java.util.stream.Collectors;
 
 public class Arquivo {
 
-    public static void gravar(String dir, String texto) throws IOException {
+    public static void gravar(String dir, byte[] bytes) throws IOException {
         Path caminho = Paths.get(dir);
-        Files.write(caminho, texto.getBytes());
+        Files.write(caminho, bytes);
     }
 
     public static InputStream ler(String dir) throws IOException {

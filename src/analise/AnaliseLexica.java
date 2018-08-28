@@ -7,12 +7,11 @@ import enuns.TipoEntrada;
 import enuns.TipoRetorno;
 import exceptions.AnaliseLexicaException;
 import token.Token;
-import java.io.IOException;
 import java.util.Stack;
 
 public class AnaliseLexica {
 
-    public static Stack<Token> analisar(char[] arquivo) throws IOException, AnaliseLexicaException {
+    public static Stack<Token> analisar(char[] arquivo) throws AnaliseLexicaException {
         Leitor leitor = new Leitor(arquivo);
 
         Stack<Token> tokens = new Stack<>();
@@ -89,7 +88,7 @@ public class AnaliseLexica {
         e1.addTransicao(".", e23);
         e23.setExcecao(e12);
         e23.addTransicao(".", e11);
-        e11.addTransicao(TipoEntrada.QUALQUER, e12);
+        e11.setExcecao(e12);
 
         //Identificacao de literias
         Estado e13 = new Estado();

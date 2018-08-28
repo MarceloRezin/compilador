@@ -27,7 +27,7 @@ public class Automato {
         Estado estadoAtual = estadoInicial;
 
         StringBuilder builderPalavra = new StringBuilder();
-
+        int cont = 0;
         while (true) {
             char caracterAtual = leitor.getCaracterLido();
 
@@ -50,6 +50,17 @@ public class Automato {
             }
 
             leitor.lerProximo();
+
+            //Caso tenha entrado em loop
+            if(cont > leitor.getLenght()){
+                break;
+            }
+
+            cont ++;
+        }
+
+        if(!estadoFinais.contains(estadoAtual)){
+            throw new AnaliseLexicaException("Um bloco não foi fechado!");
         }
 
         return retorno(estadoAtual, builderPalavra.toString());

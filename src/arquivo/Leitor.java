@@ -17,7 +17,10 @@ public class Leitor {
     public void lerProximo(){
         proximaLeitura();
         caracterLido = proximoCaracter;
-        proximoCaracter = arquivo[posicaoLeitura];
+
+        if(posicaoLeitura < arquivo.length){
+            proximoCaracter = arquivo[posicaoLeitura];
+        }
     }
 
     public char getCaracterLido() {
@@ -29,12 +32,16 @@ public class Leitor {
     }
 
     public boolean hasNext(){
-        return posicaoLeitura < arquivo.length -1;
+        return posicaoLeitura < getLenght();
     }
 
     private void proximaLeitura(){
         if(hasNext()){
             posicaoLeitura ++;
         }
+    }
+
+    public int getLenght(){
+        return arquivo.length + 1;
     }
 }

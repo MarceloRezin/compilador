@@ -1,0 +1,14 @@
+(*Primeiro teste*)
+program teste1;
+Var
+    X, y, z, j:integer;
+
+Begin
+    readln(X);
+    readln(y);
+    X := 1000;
+    Z := [(X * y) + 15 * X];
+    writeln ('O resultado esta ok');
+END;
+
+

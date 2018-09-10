@@ -1,11 +1,12 @@
 package enuns;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public enum Codigo {
 
+    /*
+    TERMINAIS
+     */
     PROGRAM(1),
     LABEL(2),
     CONST(3),
@@ -90,6 +91,42 @@ public enum Codigo {
         delimitadores = Collections.unmodifiableMap(tmp);
     }
 
+    private static final Set<Codigo> codigosTerminais;
+    static {
+        Set<Codigo> tmp = new HashSet<>();
+        tmp.add(PROGRAM);
+        tmp.add(LABEL);
+        tmp.add(CONST);
+        tmp.add(VAR);
+        tmp.add(PROCEDURE);
+        tmp.add(BEGIN);
+        tmp.add(END);
+        tmp.add(INTEGER);
+        tmp.add(ARRAY);
+        tmp.add(OF);
+        tmp.add(CALL);
+        tmp.add(GOTO);
+        tmp.add(IF);
+        tmp.add(THEN);
+        tmp.add(ELSE);
+        tmp.add(WHILE);
+        tmp.add(DO);
+        tmp.add(REPEAT);
+        tmp.add(UNTIL);
+        tmp.add(READLN);
+        tmp.add(WRITELN);
+        tmp.add(OR);
+        tmp.add(AND);
+        tmp.add(NOT);
+        tmp.add(IDENTIFICADOR);
+        tmp.add(INTEIRO);
+        tmp.add(FOR);
+        tmp.add(TO);
+        tmp.add(CASE);
+
+        codigosTerminais = Collections.unmodifiableSet(tmp);
+    }
+
     Codigo(int codigo, String caracter){
         this.codigo = codigo;
         this.caracter = caracter;
@@ -116,6 +153,10 @@ public enum Codigo {
         //Procura por palavras reservadas
         try {
             codigo = valueOf(tokenUpper);
+            if(!codigosTerminais.contains(codigo)){
+                codigo = null;
+            }
+
         }catch (IllegalArgumentException e){}
 
         if(codigo == null){

@@ -20,6 +20,8 @@ public class Leitor {
 
         if(posicaoLeitura < arquivo.length){
             proximoCaracter = arquivo[posicaoLeitura];
+        }else{ //Fim do arquivo
+            proximoCaracter = (char)-1;
         }
     }
 

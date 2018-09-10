@@ -12,7 +12,7 @@ public enum TipoEntrada {
     OPERADOR;
 
     public static TipoEntrada valueOfByCaracter(char caracter){
-        if(caracter == -1){
+        if(caracter == 65535){
             return FIM;
         }
 

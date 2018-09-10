@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum Codigo {
+public enum CodigoTerminal {
 
     PROGRAM(1),
     LABEL(2),
@@ -62,9 +62,9 @@ public enum Codigo {
     String caracter;
 
     //Otimização para encontrar operadores especiais
-    private static final Map<String, Codigo> delimitadores;
+    private static final Map<String, CodigoTerminal> delimitadores;
     static {
-        HashMap<String, Codigo> tmp = new HashMap<>();
+        HashMap<String, CodigoTerminal> tmp = new HashMap<>();
         tmp.put(OP_SOMA.caracter, OP_SOMA);
         tmp.put(OP_SUB.caracter, OP_SUB);
         tmp.put(OP_MULT.caracter, OP_MULT);
@@ -90,12 +90,12 @@ public enum Codigo {
         delimitadores = Collections.unmodifiableMap(tmp);
     }
 
-    Codigo(int codigo, String caracter){
+    CodigoTerminal(int codigo, String caracter){
         this.codigo = codigo;
         this.caracter = caracter;
     }
 
-    Codigo(int codigo){
+    CodigoTerminal(int codigo){
         this.codigo = codigo;
     }
 
@@ -103,33 +103,33 @@ public enum Codigo {
         return codigo;
     }
 
-    public static Codigo valueOfByPalavra(String token) {
+    public static CodigoTerminal valueOfByPalavra(String token) {
         String tokenUpper = token.toUpperCase();
 
         //Procura por delimitadores
-        Codigo codigo = getByOperador(tokenUpper);
+        CodigoTerminal codigoTerminal = getByOperador(tokenUpper);
 
-        if(codigo != null){
-            return codigo;
+        if(codigoTerminal != null){
+            return codigoTerminal;
         }
 
         //Procura por palavras reservadas
         try {
-            codigo = valueOf(tokenUpper);
+            codigoTerminal = valueOf(tokenUpper);
         }catch (IllegalArgumentException e){}
 
-        if(codigo == null){
+        if(codigoTerminal == null){
             return IDENTIFICADOR;
         }
 
-        return codigo;
+        return codigoTerminal;
     }
 
     public String getCaracter() {
         return caracter;
     }
 
-    public static Codigo getByOperador(String palavra){
+    public static CodigoTerminal getByOperador(String palavra){
         return delimitadores.get(palavra);
     }
 }

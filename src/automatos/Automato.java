@@ -1,7 +1,7 @@
 package automatos;
 
 import arquivo.Leitor;
-import enuns.Codigo;
+import enuns.CodigoTerminal;
 import enuns.TipoEntrada;
 import enuns.TipoRetorno;
 import exceptions.AnaliseLexicaException;
@@ -75,19 +75,19 @@ public class Automato {
             }
 
             if(tipo == TipoRetorno.IDENTIFICADOR){
-                return new Token(palavra, Codigo.IDENTIFICADOR);
+                return new Token(palavra, CodigoTerminal.IDENTIFICADOR);
             }
 
             if(tipo == TipoRetorno.OPERADOR){
-                return new Token(palavra, Codigo.getByOperador(palavra));
+                return new Token(palavra, CodigoTerminal.getByOperador(palavra));
             }
 
             if(tipo == TipoRetorno.INTEIRO){
-                return new Token(palavra, Codigo.INTEIRO);
+                return new Token(palavra, CodigoTerminal.INTEIRO);
             }
 
             if(tipo == TipoRetorno.LITERAL){
-                return new Token(palavra, Codigo.LITERAL);
+                return new Token(palavra, CodigoTerminal.LITERAL);
             }
 
             if(tipo == TipoRetorno.ERRO){

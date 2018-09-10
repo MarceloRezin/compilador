@@ -50,7 +50,7 @@ public class TokenTableModel extends AbstractTableModel {
         Token token = linhas.get(row);
 
         if(column == COL_CODIGO){
-            return token.getCodigo().getCodigo();
+            return token.getCodigoTerminal().getCodigo();
         }
         return token.getPalavra();
     }

@@ -1,26 +1,26 @@
 package token;
 
-import enuns.CodigoTerminal;
+import enuns.Codigo;
 
 public class Token {
 
     private String palavra;
-    private CodigoTerminal codigoTerminal;
+    private Codigo codigo;
 
     public Token(String palavra) {
-        this.codigoTerminal = CodigoTerminal.valueOfByPalavra(palavra);
+        this.codigo = Codigo.valueOfByPalavra(palavra);
         this.palavra = palavra;
     }
 
-    public Token(String palavra, CodigoTerminal codigoTerminal) {
+    public Token(String palavra, Codigo codigo) {
         this.palavra = palavra;
-        this.codigoTerminal = codigoTerminal;
+        this.codigo = codigo;
     }
 
     //Utilizar apanas para delimitadores
-    public Token(CodigoTerminal codigoTerminal) {
-        this.codigoTerminal = codigoTerminal;
-        String caracter = codigoTerminal.getCaracter();
+    public Token(Codigo codigo) {
+        this.codigo = codigo;
+        String caracter = codigo.getCaracter();
         if(caracter == null){
             throw new NullPointerException("Não foi definido uma caracter para o código especificado");
         }
@@ -35,17 +35,17 @@ public class Token {
         this.palavra = palavra;
     }
 
-    public CodigoTerminal getCodigoTerminal() {
-        return codigoTerminal;
+    public Codigo getCodigo() {
+        return codigo;
     }
 
-    public void setCodigoTerminal(CodigoTerminal codigoTerminal) {
-        this.codigoTerminal = codigoTerminal;
+    public void setCodigo(Codigo codigo) {
+        this.codigo = codigo;
     }
 
     @Override
     public String toString() {
-        return codigoTerminal.toString() + " " + palavra;
+        return codigo.toString() + " " + palavra;
     }
 
     public static Token tokenIgnorado(){
@@ -53,6 +53,6 @@ public class Token {
     }
 
     public boolean isIgnorado(){
-        return palavra == null && codigoTerminal == null;
+        return palavra == null && codigo == null;
     }
 }

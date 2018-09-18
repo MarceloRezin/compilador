@@ -12,6 +12,11 @@ import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class TelaEditor extends javax.swing.JFrame {
 
@@ -31,7 +36,6 @@ public class TelaEditor extends javax.swing.JFrame {
         btnCancelar = new javax.swing.JButton();
         btnRun = new javax.swing.JButton();
         jScrollPane = new javax.swing.JScrollPane();
-        txtEditor = new JTextPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaTokens = new javax.swing.JTable(modelo);
 
@@ -73,52 +77,86 @@ public class TelaEditor extends javax.swing.JFrame {
 
         jScrollPane.setMaximumSize(new java.awt.Dimension(32763217, 32321767));
 
-        txtEditor.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jScrollPane.setViewportView(txtEditor);
-
         jScrollPane2.setMaximumSize(new java.awt.Dimension(32732167, 331232767));
         jScrollPane2.setViewportView(tabelaTokens);
+        
+        JLabel lblConsole = new JLabel("Console");
+        
+        scrollPane = new JScrollPane();
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(btnAbrir, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(btnRun, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(10, 10, 10))))
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addContainerGap()
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        				.addGroup(layout.createSequentialGroup()
+        					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 880, Short.MAX_VALUE)
+        					.addContainerGap())
+        				.addGroup(layout.createSequentialGroup()
+        					.addComponent(btnNovo, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(btnAbrir, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(btnSalvar, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(btnRun, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+        					.addContainerGap(716, Short.MAX_VALUE))
+        				.addGroup(layout.createSequentialGroup()
+        					.addComponent(jScrollPane, GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 399, GroupLayout.PREFERRED_SIZE)
+        					.addGap(10))
+        				.addGroup(layout.createSequentialGroup()
+        					.addComponent(lblConsole)
+        					.addContainerGap(852, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(btnNovo, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                                        .addComponent(btnAbrir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnRun, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(10, 10, 10)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE)
-                                        .addComponent(jScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap())
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addGap(10)
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+        				.addComponent(btnNovo, GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+        				.addComponent(btnAbrir, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        				.addComponent(btnSalvar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        				.addComponent(btnCancelar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        				.addComponent(btnRun, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        			.addGap(10)
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        				.addComponent(jScrollPane2, GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE)
+        				.addComponent(jScrollPane, GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE))
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(lblConsole)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap())
         );
+        
+        txtCont = new JTextArea();
+        txtCont.setForeground(Color.RED);
+        txtCont.setText("1");
+        txtCont.setEditable(false);
+        jScrollPane.setRowHeaderView(txtCont);
+        txtEditor = new JTextArea();
+        txtEditor.addKeyListener(new KeyAdapter() {
+        	@Override
+        	public void keyReleased(KeyEvent arg0) {
+        		if(arg0.getKeyCode() == arg0.VK_ENTER) {
+					contaLinhaEnter(txtEditor,txtCont);
+				}
+				else if(arg0.getKeyCode() == arg0.VK_BACK_SPACE) {
+					contaLinhaBack(txtEditor,txtCont);	
+				}
+        	}
+        });
+        jScrollPane.setViewportView(txtEditor);
+        
+        txtConsole = new JTextArea();
+        txtConsole.setEditable(false);
+        scrollPane.setViewportView(txtConsole);
+        getContentPane().setLayout(layout);
 
         pack();
         setLocationRelativeTo(null);
@@ -177,7 +215,10 @@ public class TelaEditor extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tabelaTokens;
-    private JTextPane txtEditor;
+    private JScrollPane scrollPane;
+    private JTextArea txtConsole;
+    private JTextArea txtCont;
+    private JTextArea txtEditor;
     // End of variables declaration//GEN-END:variables
 
     public void salvarArq(String txtEditor) {
@@ -203,7 +244,7 @@ public class TelaEditor extends javax.swing.JFrame {
         }
     }
 
-    private void lerArq(JTextPane txtEditor) {
+    private void lerArq(JTextArea txtEditor) {
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Extensão .lms", "lms");
         chooser.addChoosableFileFilter(filter);
@@ -221,7 +262,7 @@ public class TelaEditor extends javax.swing.JFrame {
         }
     }
 
-    private void editado(JTextPane txtEditor) {
+    private void editado(JTextArea txtEditor) {
         int op = JOptionPane.showConfirmDialog(null, "Deseja salvar o arquivo?");
         if (op == 0) {
             salvarArq(txtEditor.getText());
@@ -229,4 +270,21 @@ public class TelaEditor extends javax.swing.JFrame {
             txtEditor.setText("");
         }
     }
+    public void contaLinhaEnter(JTextArea area,JTextArea cont) {
+		String linhas ="";
+		int i;
+		for(i =0;i<area.getLineCount();i++) {
+			linhas += i+1+"\n";
+		}
+		cont.setText(linhas);;
+	}
+	public void contaLinhaBack(JTextArea area,JTextArea cont) {
+		String linhas ="";
+		int i;
+		for(i =1;i<area.getLineCount();i++) {
+			linhas += i+"\n";
+		}
+		linhas += i;
+		cont.setText(linhas);;
+	}
 }

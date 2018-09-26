@@ -1,5 +1,7 @@
 package enuns;
 
+import builder.DerivacaoBuilder;
+
 import java.util.*;
 
 public enum Codigo {
@@ -170,6 +172,73 @@ public enum Codigo {
 //
 //        codigosTerminais = Collections.unmodifiableSet(tmp);
 //    }
+
+    private static final Map<Codigo, Map<Codigo, List<Codigo>>> tabelaParsing;
+    static {
+        HashMap<Codigo, Map<Codigo, List<Codigo>>> tmp = new HashMap<>();
+
+        tmp.put(PROGRAM, new DerivacaoBuilder()
+                .quando(PROGRAM).derivarEm(PROGRAM, IDENTIFICADOR, OP_PONTO_VIRGULA, BLOCO, OP_PONTO)
+                .toMap());
+
+        tmp.put(BLOCO, new DerivacaoBuilder()
+                .quando(LABEL).derivarEm(DCLROT, DCLCONST, DCLVAR, DCLPROC, CORPO)
+                .quando(CONST).derivarEm(DCLROT, DCLCONST, DCLVAR, DCLPROC, CORPO)
+                .quando(VAR).derivarEm(DCLROT, DCLCONST, DCLVAR, DCLPROC, CORPO)
+                .quando(PROCEDURE).derivarEm(DCLROT, DCLCONST, DCLVAR, DCLPROC, CORPO)
+                .quando(BEGIN).derivarEm(DCLROT,DCLCONST,DCLVAR,DCLPROC,CORPO)
+                .toMap());
+
+        tmp.put(DCLROT, new DerivacaoBuilder()
+                .quando(LABEL).derivarEm(LABEL, LID, OP_PONTO_VIRGULA)
+                .quando(CONST).derivarEm()
+                .quando(VAR).derivarEm()
+                .quando(PROCEDURE).derivarEm()
+                .quando(BEGIN).derivarEm().toMap());
+
+        tmp.put(LID, new DerivacaoBuilder()
+                .quando(IDENTIFICADOR).derivarEm(IDENTIFICADOR, REPIDENT)
+                .toMap());
+
+        tmp.put(REPIDENT, new DerivacaoBuilder()
+                .quando(OP_TIPAGEM).derivarEm()
+                .quando(OP_VIRGULA).derivarEm(OP_PONTO_VIRGULA, IDENTIFICADOR, REPIDENT)
+                .quando(OP_PONTO_VIRGULA).derivarEm().toMap());
+
+        tmp.put(DCLCONST, new DerivacaoBuilder()
+                .quando(CONST).derivarEm(CONST, IDENTIFICADOR, OP_IGUAL, INTEIRO, OP_PONTO_VIRGULA, LDCONST)
+                .quando(VAR).derivarEm()
+                .quando(PROCEDURE).derivarEm()
+                .quando(BEGIN).derivarEm().toMap());
+
+        tmp.put(LDCONST, new DerivacaoBuilder()
+                .quando(VAR).derivarEm()
+                .quando(PROCEDURE).derivarEm()
+                .quando(BEGIN).derivarEm()
+                .quando(IDENTIFICADOR).derivarEm(IDENTIFICADOR, OP_IGUAL, INTEIRO, OP_PONTO_VIRGULA, LDCONST).toMap());
+
+        tmp.put(DCLVAR, new DerivacaoBuilder()
+                .quando(VAR).derivarEm(VAR, LID, OP_TIPAGEM, TIPO, OP_PONTO_VIRGULA, LDVAR)
+                .quando(PROCEDURE).derivarEm()
+                .quando(BEGIN).derivarEm().toMap());
+
+        tmp.put(LDVAR, new DerivacaoBuilder()
+                .quando(PROCEDURE).derivarEm()
+                .quando(BEGIN).derivarEm()
+                .quando(IDENTIFICADOR).derivarEm(LID, OP_TIPAGEM, TIPO, OP_PONTO_VIRGULA, LDVAR).toMap());
+
+        tmp.put(TIPO, new DerivacaoBuilder()
+                .quando(INTEGER).derivarEm(INTEGER)
+                .quando(ARRAY).derivarEm(ARRAY, OP_COLCHETE_ABRE, INTEIRO, OP_PONTO_PONTO, INTEIRO, OP_COLCHETE_FECHA, OF,INTEGER).toMap());
+
+        tmp.put(DCLPROC, new DerivacaoBuilder().quando(PROCEDURE)
+                .derivarEm(PROCEDURE, IDENTIFICADOR, DEFPAR, OP_PONTO_VIRGULA,BLOCO, OP_PONTO_VIRGULA, DCLPROC).quando(BEGIN)
+                .derivarEm().toMap());
+
+        
+
+        tabelaParsing = Collections.unmodifiableMap(tmp);
+    }
 
     Codigo(int codigo, String caracter){
         this.codigo = codigo;

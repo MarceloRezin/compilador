@@ -146,8 +146,11 @@ public class TelaEditor extends javax.swing.JFrame {
 
     private void runAction(){
         try {
-            modelo = new TokenTableModel(AnaliseLexica.analisar(txtEditor.getText().toCharArray()));
-            tabelaTokens.setModel(modelo);
+            char[] texto = txtEditor.getText().toCharArray();
+            if(texto.length > 0){
+                modelo = new TokenTableModel(AnaliseLexica.analisar(texto));
+                tabelaTokens.setModel(modelo);
+            }
         } catch (AnaliseLexicaException e) {
            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }

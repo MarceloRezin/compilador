@@ -177,7 +177,7 @@ public enum Codigo {
     static {
         HashMap<Codigo, Map<Codigo, List<Codigo>>> tmp = new HashMap<>();
 
-        tmp.put(PROGRAM, new DerivacaoBuilder()
+        tmp.put(PROGRAMA, new DerivacaoBuilder()
                 .quando(PROGRAM).derivarEm(PROGRAM, IDENTIFICADOR, OP_PONTO_VIRGULA, BLOCO, OP_PONTO)
                 .toMap());
 

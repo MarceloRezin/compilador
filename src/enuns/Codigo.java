@@ -231,11 +231,214 @@ public enum Codigo {
                 .quando(INTEGER).derivarEm(INTEGER)
                 .quando(ARRAY).derivarEm(ARRAY, OP_COLCHETE_ABRE, INTEIRO, OP_PONTO_PONTO, INTEIRO, OP_COLCHETE_FECHA, OF,INTEGER).toMap());
 
-        tmp.put(DCLPROC, new DerivacaoBuilder().quando(PROCEDURE)
-                .derivarEm(PROCEDURE, IDENTIFICADOR, DEFPAR, OP_PONTO_VIRGULA,BLOCO, OP_PONTO_VIRGULA, DCLPROC).quando(BEGIN)
-                .derivarEm().toMap());
+        tmp.put(DCLPROC, new DerivacaoBuilder()
+                .quando(PROCEDURE).derivarEm(PROCEDURE, IDENTIFICADOR, DEFPAR, OP_PONTO_VIRGULA,BLOCO, OP_PONTO_VIRGULA, DCLPROC)
+                .quando(BEGIN).derivarEm().toMap());
 
-        
+        tmp.put(DEFPAR, new DerivacaoBuilder()
+                .quando(OP_PARENTESE_ABRE).derivarEm(OP_PARENTESE_ABRE, LID, OP_TIPAGEM, INTEGER, OP_PARENTESE_FECHA)
+                .quando(OP_TIPAGEM).derivarEm().toMap());
+
+        tmp.put(CORPO, new DerivacaoBuilder()
+                .quando(BEGIN).derivarEm(BEGIN, COMANDO, REPCOMANDO, END).toMap());
+
+        tmp.put(REPCOMANDO, new DerivacaoBuilder()
+                .quando(END).derivarEm()
+                .quando(OP_PONTO_VIRGULA).derivarEm(OP_PONTO_VIRGULA, COMANDO, REPCOMANDO).toMap());
+
+        tmp.put(COMANDO, new DerivacaoBuilder()
+                .quando(BEGIN).derivarEm(CORPO)
+                .quando(END).derivarEm()
+                .quando(CALL).derivarEm(CALL, IDENTIFICADOR, PARAMETROS)
+                .quando(GOTO).derivarEm(GOTO, IDENTIFICADOR)
+                .quando(IF).derivarEm(IF, EXPRESSAO, THEN, COMANDO, ELSEPARTE)
+                .quando(ELSE).derivarEm()
+                .quando(WHILE).derivarEm(WHILE, EXPRESSAO, DO, COMANDO)
+                .quando(REPEAT).derivarEm(REPEAT, COMANDO, UNTIL, EXPRESSAO)
+                .quando(UNTIL).derivarEm()
+                .quando(READLN).derivarEm(READLN, OP_PARENTESE_ABRE, VARIAVEL, REPVARIAVEL, OP_PARENTESE_FECHA)
+                .quando(WRITELN).derivarEm(WRITELN, OP_PARENTESE_ABRE, ITEMSAIDA, REPIDENT, OP_PARENTESE_FECHA)
+                .quando(IDENTIFICADOR).derivarEm(IDENTIFICADOR, RCOMID)
+                .quando(FOR).derivarEm(FOR, IDENTIFICADOR, OP_RECEBE, EXPRESSAO, TO, EXPRESSAO, DO, COMANDO)
+                .quando(CASE).derivarEm(CASE, EXPRESSAO, OF, CONDCASE, END)
+                .quando(OP_PONTO_VIRGULA).derivarEm().toMap());
+
+        tmp.put(RCOMID, new DerivacaoBuilder()
+                .quando(OP_COLCHETE_ABRE).derivarEm(RVAR, OP_RECEBE, EXPRESSAO)
+                .quando(OP_RECEBE).derivarEm(RVAR, OP_RECEBE, EXPRESSAO)
+                .quando(OP_TIPAGEM).derivarEm(OP_TIPAGEM, COMANDO).toMap());
+
+        tmp.put(RVAR, new DerivacaoBuilder()
+                .quando(OP_COLCHETE_ABRE).derivarEm(OP_COLCHETE_ABRE, EXPRESSAO, OP_COLCHETE_FECHA)
+                .quando(OP_RECEBE).derivarEm().toMap());
+
+        tmp.put(PARAMETROS, new DerivacaoBuilder()
+                .quando(END).derivarEm()
+                .quando(ELSE).derivarEm()
+                .quando(UNTIL).derivarEm()
+                .quando(OP_PARENTESE_ABRE).derivarEm(OP_PARENTESE_ABRE, EXPRESSAO, REPPAR, OP_PARENTESE_FECHA)
+                .quando(OP_PONTO_VIRGULA).derivarEm().toMap());
+
+        tmp.put(REPPAR, new DerivacaoBuilder()
+                .quando(OP_PARENTESE_ABRE).derivarEm()
+                .quando(OP_VIRGULA).derivarEm(OP_VIRGULA, EXPRESSAO, REPPAR).toMap());
+
+        tmp.put(ELSEPARTE, new DerivacaoBuilder()
+                .quando(END).derivarEm()
+                .quando(ELSE).derivarEm(END, COMANDO)
+                .quando(UNTIL).derivarEm()
+                .quando(OP_PONTO_VIRGULA).derivarEm().toMap());
+
+        tmp.put(VARIAVEL, new DerivacaoBuilder()
+                .quando(IDENTIFICADOR).derivarEm(IDENTIFICADOR, VARIAVEL1).toMap());
+
+        tmp.put(VARIAVEL1, new DerivacaoBuilder()
+                .quando(END).derivarEm()
+                .quando(OF).derivarEm()
+                .quando(THEN).derivarEm()
+                .quando(ELSE).derivarEm()
+                .quando(DO).derivarEm()
+                .quando(UNTIL).derivarEm()
+                .quando(OR).derivarEm()
+                .quando(AND).derivarEm()
+                .quando(TO).derivarEm()
+                .quando(OP_SOMA).derivarEm()
+                .quando(OP_SUB).derivarEm()
+                .quando(OP_MULT).derivarEm()
+                .quando(OP_DIV).derivarEm()
+                .quando(OP_COLCHETE_ABRE).derivarEm(OP_COLCHETE_ABRE, EXPRESSAO, OP_COLCHETE_FECHA)
+                .quando(OP_COLCHETE_FECHA).derivarEm()
+                .quando(OP_PARENTESE_FECHA).derivarEm()
+                .quando(OP_IGUAL).derivarEm()
+                .quando(OP_MAIOR).derivarEm()
+                .quando(OP_MAIOR_OU_IGUAL).derivarEm()
+                .quando(OP_MENOR).derivarEm()
+                .quando(OP_MENOR_OU_IGUAL).derivarEm()
+                .quando(OP_DIFERENTE).derivarEm()
+                .quando(OP_VIRGULA).derivarEm()
+                .quando(OP_PONTO_VIRGULA).derivarEm().toMap());
+
+        tmp.put(REPVARIAVEL, new DerivacaoBuilder()
+                .quando(OP_PARENTESE_FECHA).derivarEm()
+                .quando(OP_VIRGULA).derivarEm(OP_VIRGULA, VARIAVEL, REPVARIAVEL).toMap());
+
+        tmp.put(ITEMSAIDA, new DerivacaoBuilder()
+                .quando(NOT).derivarEm(EXPRESSAO)
+                .quando(IDENTIFICADOR).derivarEm(EXPRESSAO)
+                .quando(INTEIRO).derivarEm(EXPRESSAO)
+                .quando(OP_SOMA).derivarEm(EXPRESSAO)
+                .quando(OP_SUB).derivarEm(EXPRESSAO)
+                .quando(OP_PARENTESE_ABRE).derivarEm(EXPRESSAO)
+                .quando(LITERAL).derivarEm(LITERAL).toMap());
+
+        tmp.put(REPITEM, new DerivacaoBuilder()
+                .quando(OP_PARENTESE_FECHA).derivarEm()
+                .quando(OP_VIRGULA).derivarEm(OP_VIRGULA, ITEMSAIDA, REPITEM).toMap());
+
+        tmp.put(EXPRESSAO, new DerivacaoBuilder()
+                .quando(NOT).derivarEm(EXPSIMP, REPEXPSIMP)
+                .quando(IDENTIFICADOR).derivarEm(EXPSIMP, REPEXPSIMP)
+                .quando(INTEIRO).derivarEm(EXPSIMP, REPEXPSIMP)
+                .quando(OP_SOMA).derivarEm(EXPSIMP, REPEXPSIMP)
+                .quando(OP_SUB).derivarEm(EXPSIMP, REPEXPSIMP)
+                .quando(OP_PARENTESE_ABRE).derivarEm(EXPSIMP, REPEXPSIMP)
+                .toMap());
+
+        tmp.put(REPEXPSIMP, new DerivacaoBuilder()
+                .quando(END).derivarEm()
+                .quando(OF).derivarEm()
+                .quando(THEN).derivarEm()
+                .quando(ELSE).derivarEm()
+                .quando(DO).derivarEm()
+                .quando(UNTIL).derivarEm()
+                .quando(TO).derivarEm()
+                .quando(OP_COLCHETE_FECHA).derivarEm()
+                .quando(OP_PARENTESE_FECHA).derivarEm()
+                .quando(OP_IGUAL).derivarEm(OP_IGUAL, EXPSIMP)
+                .quando(OP_MAIOR).derivarEm(OP_MAIOR, EXPSIMP)
+                .quando(OP_MAIOR_OU_IGUAL).derivarEm(OP_MAIOR_OU_IGUAL, EXPSIMP)
+                .quando(OP_MENOR).derivarEm(OP_MENOR, EXPSIMP)
+                .quando(OP_MENOR_OU_IGUAL).derivarEm(OP_MAIOR_OU_IGUAL, EXPSIMP)
+                .quando(OP_DIFERENTE).derivarEm(OP_DIFERENTE, EXPSIMP)
+                .quando(OP_VIRGULA).derivarEm()
+                .quando(OP_PONTO_VIRGULA).derivarEm().toMap());
+
+        tmp.put(EXPSIMP, new DerivacaoBuilder()
+                .quando(NOT).derivarEm(TERMO, REPEXP)
+                .quando(IDENTIFICADOR).derivarEm(TERMO, REPEXP)
+                .quando(INTEIRO).derivarEm(TERMO, REPEXP)
+                .quando(OP_SOMA).derivarEm(OP_SOMA, TERMO, REPEXP)
+                .quando(OP_SUB).derivarEm(OP_SUB, TERMO, REPEXP)
+                .quando(OP_PARENTESE_ABRE).derivarEm(TERMO, REPEXP).toMap());
+
+        tmp.put(REPEXP, new DerivacaoBuilder()
+                .quando(END).derivarEm()
+                .quando(OF).derivarEm()
+                .quando(THEN).derivarEm()
+                .quando(ELSE).derivarEm()
+                .quando(DO).derivarEm()
+                .quando(UNTIL).derivarEm()
+                .quando(OR).derivarEm(OR, TERMO, REPEXP)
+                .quando(TO).derivarEm()
+                .quando(OP_SOMA).derivarEm(OP_SOMA, TERMO, REPEXP)
+                .quando(OP_SUB).derivarEm(OP_SUB, TERMO, REPEXP)
+                .quando(OP_COLCHETE_FECHA).derivarEm()
+                .quando(OP_PARENTESE_FECHA).derivarEm()
+                .quando(OP_IGUAL).derivarEm()
+                .quando(OP_MAIOR_OU_IGUAL).derivarEm()
+                .quando(OP_MENOR).derivarEm()
+                .quando(OP_MENOR_OU_IGUAL).derivarEm()
+                .quando(OP_DIFERENTE).derivarEm()
+                .quando(OP_VIRGULA).derivarEm()
+                .quando(OP_PONTO_VIRGULA).derivarEm().toMap());
+
+        tmp.put(TERMO, new DerivacaoBuilder()
+                .quando(NOT).derivarEm(FATOR, REPTERMO)
+                .quando(IDENTIFICADOR).derivarEm(FATOR, REPTERMO)
+                .quando(INTEIRO).derivarEm(FATOR, REPTERMO)
+                .quando(OP_PARENTESE_ABRE).derivarEm(FATOR, REPTERMO).toMap());
+
+        tmp.put(REPTERMO, new DerivacaoBuilder()
+                .quando(END).derivarEm()
+                .quando(OF).derivarEm()
+                .quando(THEN).derivarEm()
+                .quando(ELSE).derivarEm()
+                .quando(DO).derivarEm()
+                .quando(UNTIL).derivarEm()
+                .quando(OR).derivarEm()
+                .quando(AND).derivarEm(AND, FATOR, REPTERMO)
+                .quando(TO).derivarEm()
+                .quando(OP_SOMA).derivarEm()
+                .quando(OP_SUB).derivarEm()
+                .quando(OP_MULT).derivarEm(OP_MULT, FATOR, REPTERMO)
+                .quando(OP_DIV).derivarEm(OP_DIV, FATOR, REPTERMO)
+                .quando(OP_COLCHETE_FECHA).derivarEm()
+                .quando(OP_PARENTESE_FECHA).derivarEm()
+                .quando(OP_IGUAL).derivarEm()
+                .quando(OP_MAIOR).derivarEm()
+                .quando(OP_MAIOR_OU_IGUAL).derivarEm()
+                .quando(OP_MENOR).derivarEm()
+                .quando(OP_MENOR_OU_IGUAL).derivarEm()
+                .quando(OP_DIFERENTE).derivarEm()
+                .quando(OP_VIRGULA).derivarEm()
+                .quando(OP_PONTO_VIRGULA).derivarEm().toMap());
+
+        tmp.put(FATOR, new DerivacaoBuilder()
+                .quando(NOT).derivarEm(NOT, FATOR)
+                .quando(IDENTIFICADOR).derivarEm(VARIAVEL)
+                .quando(INTEIRO).derivarEm(INTEIRO)
+                .quando(OP_PARENTESE_ABRE).derivarEm(OP_PARENTESE_ABRE, EXPRESSAO, OP_PARENTESE_FECHA).toMap());
+
+        tmp.put(CONDCASE, new DerivacaoBuilder()
+                .quando(INTEIRO).derivarEm(INTEIRO, RPINTEIRO, OP_TIPAGEM, COMANDO, CONDCASE).toMap());
+
+        tmp.put(CONTCASE, new DerivacaoBuilder()
+                .quando(END).derivarEm()
+                .quando(OP_PONTO_VIRGULA).derivarEm(OP_PONTO_VIRGULA, CONDCASE).toMap());
+
+        tmp.put(RPINTEIRO, new DerivacaoBuilder()
+                .quando(OP_TIPAGEM).derivarEm()
+                .quando(OP_VIRGULA).derivarEm(OP_VIRGULA, INTEIRO, RPINTEIRO).toMap());
 
         tabelaParsing = Collections.unmodifiableMap(tmp);
     }

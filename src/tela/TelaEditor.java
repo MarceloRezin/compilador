@@ -17,6 +17,9 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.Dimension;
+import javax.swing.table.TableModel;
+import javax.swing.table.DefaultTableModel;
 
 public class TelaEditor extends javax.swing.JFrame {
 
@@ -35,6 +38,7 @@ public class TelaEditor extends javax.swing.JFrame {
         btnSalvar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnRun = new javax.swing.JButton();
+        btnPlay = new JButton();
         jScrollPane = new javax.swing.JScrollPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaTokens = new javax.swing.JTable(modelo);
@@ -69,6 +73,9 @@ public class TelaEditor extends javax.swing.JFrame {
         });
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tela/imagens/x-button.png"))); // NOI18N
+        
+
+        btnPlay.setIcon(new ImageIcon(TelaEditor.class.getResource("/tela/imagens/next.png"))); // NOI18N
 
         btnRun.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tela/imagens/Run.png"))); // NOI18N
         btnRun.addActionListener( l -> {
@@ -83,56 +90,75 @@ public class TelaEditor extends javax.swing.JFrame {
         JLabel lblConsole = new JLabel("Console");
         
         scrollPane = new JScrollPane();
+        
+        JScrollPane scrollPane_1 = new JScrollPane();
+        scrollPane_1.setMaximumSize(new Dimension(32732167, 331232767));
+        
+      
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         layout.setHorizontalGroup(
         	layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(layout.createSequentialGroup()
         			.addContainerGap()
-        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+        				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 880, Short.MAX_VALUE)
+        				.addComponent(lblConsole, Alignment.LEADING)
         				.addGroup(layout.createSequentialGroup()
-        					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 880, Short.MAX_VALUE)
-        					.addContainerGap())
-        				.addGroup(layout.createSequentialGroup()
-        					.addComponent(btnNovo, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        						.addGroup(layout.createSequentialGroup()
+        							.addComponent(btnNovo, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+        							.addPreferredGap(ComponentPlacement.RELATED)
+        							.addComponent(btnAbrir, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+        							.addPreferredGap(ComponentPlacement.RELATED)
+        							.addComponent(btnSalvar, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+        							.addPreferredGap(ComponentPlacement.RELATED)
+        							.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+        							.addPreferredGap(ComponentPlacement.RELATED)
+        							.addComponent(btnRun, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+        							.addPreferredGap(ComponentPlacement.RELATED)
+        							.addComponent(btnPlay, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+        						.addComponent(jScrollPane, GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE))
         					.addPreferredGap(ComponentPlacement.RELATED)
-        					.addComponent(btnAbrir, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-        					.addPreferredGap(ComponentPlacement.RELATED)
-        					.addComponent(btnSalvar, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-        					.addPreferredGap(ComponentPlacement.RELATED)
-        					.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-        					.addPreferredGap(ComponentPlacement.RELATED)
-        					.addComponent(btnRun, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-        					.addContainerGap(716, Short.MAX_VALUE))
-        				.addGroup(layout.createSequentialGroup()
-        					.addComponent(jScrollPane, GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
-        					.addPreferredGap(ComponentPlacement.RELATED)
-        					.addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 399, GroupLayout.PREFERRED_SIZE)
-        					.addGap(10))
-        				.addGroup(layout.createSequentialGroup()
-        					.addComponent(lblConsole)
-        					.addContainerGap(852, Short.MAX_VALUE))))
+        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        						.addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 399, GroupLayout.PREFERRED_SIZE)
+        						.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 399, GroupLayout.PREFERRED_SIZE))))
+        			.addContainerGap())
         );
         layout.setVerticalGroup(
         	layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(layout.createSequentialGroup()
-        			.addGap(10)
-        			.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
-        				.addComponent(btnNovo, GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-        				.addComponent(btnAbrir, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        				.addComponent(btnSalvar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        				.addComponent(btnCancelar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        				.addComponent(btnRun, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        			.addGap(10)
-        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        				.addComponent(jScrollPane2, GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE)
-        				.addComponent(jScrollPane, GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE))
+        			.addContainerGap()
+        			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+        				.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+        					.addComponent(btnNovo, GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+        					.addComponent(btnAbrir, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        					.addComponent(btnSalvar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        					.addComponent(btnCancelar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        					.addComponent(btnRun, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        				.addComponent(btnPlay, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+        				.addGroup(layout.createSequentialGroup()
+        					.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(jScrollPane2, GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE))
+        				.addComponent(jScrollPane, GroupLayout.DEFAULT_SIZE, 703, Short.MAX_VALUE))
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addComponent(lblConsole)
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE)
         			.addContainerGap())
         );
+        
+        tabelaParse = new JTable(new DefaultTableModel(
+        	new Object[][] {
+        	},
+        	new String[] {
+        		"C\u00F3digo", "Palavra"
+        	}
+        ));
+        scrollPane_1.setViewportView(tabelaParse);
         
         txtCont = new JTextArea();
         txtCont.setForeground(Color.RED);
@@ -222,6 +248,8 @@ public class TelaEditor extends javax.swing.JFrame {
     private JTextArea txtConsole;
     private JTextArea txtCont;
     private JTextArea txtEditor;
+    private JButton btnPlay;
+    private JTable tabelaParse;
     // End of variables declaration//GEN-END:variables
 
     public void salvarArq(String txtEditor) {
@@ -249,7 +277,7 @@ public class TelaEditor extends javax.swing.JFrame {
 
     private void lerArq(JTextArea txtEditor) {
         JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("ExtensÃ£o .lms", "lms");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Extensção .lms", "lms");
         chooser.addChoosableFileFilter(filter);
         chooser.setFileFilter(filter);
         chooser.setAcceptAllFileFilterUsed(false);
@@ -258,7 +286,7 @@ public class TelaEditor extends javax.swing.JFrame {
             try {
                 arquivoSelecionado = chooser.getSelectedFile();
                 txtEditor.setText(Arquivo.convert(Arquivo.ler(arquivoSelecionado.getAbsolutePath()))); //seta o txtEditor com texto salvo do arquivo. Criar o metodo get que retorna a String na classe Arquivo
-
+                contaLinhaBack(txtEditor,txtCont);
             }catch (IOException e){
                 e.printStackTrace();
             }
@@ -271,6 +299,7 @@ public class TelaEditor extends javax.swing.JFrame {
             salvarArq(txtEditor.getText());
         } else if (op == 1) {
             txtEditor.setText("");
+            contaLinhaBack(txtEditor,txtCont);
         }
     }
     public void contaLinhaEnter(JTextArea area,JTextArea cont) {

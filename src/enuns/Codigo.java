@@ -173,7 +173,7 @@ public enum Codigo {
 //        codigosTerminais = Collections.unmodifiableSet(tmp);
 //    }
 
-    private static final Map<Codigo, Map<Codigo, List<Codigo>>> tabelaParsing;
+    public static final Map<Codigo, Map<Codigo, List<Codigo>>> tabelaParsing;
     static {
         HashMap<Codigo, Map<Codigo, List<Codigo>>> tmp = new HashMap<>();
 
@@ -469,7 +469,7 @@ public enum Codigo {
         //Procura por palavras reservadas
         try {
             codigo = valueOf(tokenUpper);
-            if(codigo.getCodigo() > 51){
+            if(!codigo.isTerminal()){
                 codigo = null;
             }
 
@@ -488,5 +488,9 @@ public enum Codigo {
 
     public static Codigo getByOperador(String palavra){
         return delimitadores.get(palavra);
+    }
+
+    public boolean isTerminal  (){
+        return getCodigo() < 52;
     }
 }

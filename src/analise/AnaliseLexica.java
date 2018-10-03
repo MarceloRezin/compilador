@@ -29,7 +29,13 @@ public class AnaliseLexica {
             }
         }
 
-        return tokens;
+        Stack<Token> tokensInvertido = new Stack<>();
+
+        while (!tokens.isEmpty()){
+            tokensInvertido.push(tokens.pop());
+        }
+
+        return tokensInvertido;
     }
 
     private static Automato getAutomato(){

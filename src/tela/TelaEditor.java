@@ -1,8 +1,10 @@
 package tela;
 
 import analise.AnaliseLexica;
+import analise.AnaliseSintatica;
 import arquivo.Arquivo;
 import exceptions.AnaliseLexicaException;
+import token.Token;
 
 import java.io.File;
 import java.io.IOException;
@@ -148,10 +150,21 @@ public class TelaEditor extends javax.swing.JFrame {
         try {
             char[] texto = txtEditor.getText().toCharArray();
             if(texto.length > 0){
-                modelo = new TokenTableModel(AnaliseLexica.analisar(texto));
+                Stack<Token> derivacoes = AnaliseLexica.analisar(texto);
+                modelo = new TokenTableModel(derivacoes);
+
+                Stack<Token> parsing = AnaliseSintatica.getPilhaParsingInicial();
+
+                System.out.println(parsing);
+
+                while(!derivacoes.isEmpty()){
+                    AnaliseSintatica.analisar(derivacoes, parsing);
+                    System.out.println(parsing);
+                }
+
                 tabelaTokens.setModel(modelo);
             }
-        } catch (AnaliseLexicaException e) {
+        } catch (Exception e) {
            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }

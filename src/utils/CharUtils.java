@@ -15,7 +15,7 @@ public final class CharUtils {
 
     //DELIMITADORES
     public static boolean isOperador(char caracter){
-        return caracter == 36 || (caracter > 42 && caracter < 46) || caracter == 47 || caracter == 59 || caracter == 91 || caracter == 93;
+        return caracter == 36 || (caracter > 42 && caracter < 45) || caracter == 47 || caracter == 59 || caracter == 91 || caracter == 93;
     }
 
     //ESPACO

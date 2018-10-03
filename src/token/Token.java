@@ -21,9 +21,7 @@ public class Token {
     public Token(Codigo codigo) {
         this.codigo = codigo;
         String caracter = codigo.getCaracter();
-        if(caracter == null){
-            throw new NullPointerException("Não foi definido uma caracter para o código especificado");
-        }
+
         this.palavra = caracter;
     }
 

@@ -29,7 +29,13 @@ public class AnaliseLexica {
             }
         }
 
-        return tokens;
+        Stack<Token> tokensInvertido = new Stack<>();
+
+        while (!tokens.isEmpty()){
+            tokensInvertido.push(tokens.pop());
+        }
+
+        return tokensInvertido;
     }
 
     private static Automato getAutomato(){
@@ -56,7 +62,7 @@ public class AnaliseLexica {
         e6.addTransicao(TipoEntrada.LETRA, e6);
         e6.setExcecao(e7);
 
-        //Identificacao de inteiros
+        //Identificacao de inteiros positivos
         Estado e8 = new Estado();
         Estado e9 = new Estado(TipoRetorno.INTEIRO);
         Estado e10 = new Estado(TipoRetorno.ERRO);
@@ -72,6 +78,7 @@ public class AnaliseLexica {
         Estado e21 = new Estado();
         Estado e22 = new Estado();
         Estado e23 = new Estado();
+        Estado e24 = new Estado();
 
         e1.addTransicao(TipoEntrada.OPERADOR, e11);
         e1.addTransicao(")", e11);
@@ -89,6 +96,11 @@ public class AnaliseLexica {
         e23.setExcecao(e12);
         e23.addTransicao(".", e11);
         e11.setExcecao(e12);
+
+        //Identifica inteiros negativos
+        e1.addTransicao("-", e24);
+        e24.addTransicao(TipoEntrada.DIGITO, e8);
+        e24.setExcecao(e12);
 
         //Identificacao de literias
         Estado e13 = new Estado();

@@ -157,7 +157,7 @@ public class TelaEditor extends javax.swing.JFrame {
         	new Object[][] {
         	},
         	new String[] {
-        		"C\u00F3digo", "Palavra"
+        		"CÃ³digo", "Palavra"
         	}
         ));
         scrollPane_1.setViewportView(tabelaParse);
@@ -293,7 +293,7 @@ public class TelaEditor extends javax.swing.JFrame {
 
     private void lerArq(JTextArea txtEditor) {
         JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Extensção .lms", "lms");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("ExtensÃ£o .lms", "lms");
         chooser.addChoosableFileFilter(filter);
         chooser.setFileFilter(filter);
         chooser.setAcceptAllFileFilterUsed(false);

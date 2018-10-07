@@ -11,10 +11,18 @@ public class TokenTableModel extends AbstractTableModel {
     private static final int COL_PALAVRA = 1;
     private String[] colunas = new String[]{"Código", "Palavra"};
 
-    private Stack<Token> linhas;
+    private Stack<Token> linhas = new Stack<>();
 
     public TokenTableModel(Stack<Token> linhas) {
-        this.linhas = linhas;
+
+        if(linhas != null && !linhas.isEmpty()){
+            //Faz uma copia para nao alterar o conteudo
+            Stack<Token> pilha = (Stack<Token>) linhas.clone();
+
+            while(!pilha.isEmpty()){
+                this.linhas.push(pilha.pop());
+            }
+        }
     }
 
     @Override

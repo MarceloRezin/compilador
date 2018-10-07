@@ -18,7 +18,9 @@ public final class ListDerivacaoBuilder {
     }
 
     public DerivacaoBuilder derivarEm(Codigo... derivacoes){
-        derivacaoBuilder.getDerivacoes().put(codigo , Arrays.asList(derivacoes));
+        List<Codigo> listDerivacoes = Arrays.asList(derivacoes);
+        Collections.reverse(listDerivacoes);
+        derivacaoBuilder.getDerivacoes().put(codigo , listDerivacoes);
 
         return derivacaoBuilder;
     }

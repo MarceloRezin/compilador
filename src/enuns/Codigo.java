@@ -200,9 +200,10 @@ public enum Codigo {
                 .quando(IDENTIFICADOR).derivarEm(IDENTIFICADOR, REPIDENT)
                 .toMap());
 
+        //TODO: Analisar erro no exemplo com apenas o writeln
         tmp.put(REPIDENT, new DerivacaoBuilder()
                 .quando(OP_TIPAGEM).derivarEm()
-                .quando(OP_VIRGULA).derivarEm(OP_PONTO_VIRGULA, IDENTIFICADOR, REPIDENT)
+                .quando(OP_VIRGULA).derivarEm(OP_VIRGULA, IDENTIFICADOR, REPIDENT)
                 .quando(OP_PONTO_VIRGULA).derivarEm().toMap());
 
         tmp.put(DCLCONST, new DerivacaoBuilder()
@@ -235,6 +236,7 @@ public enum Codigo {
                 .quando(PROCEDURE).derivarEm(PROCEDURE, IDENTIFICADOR, DEFPAR, OP_PONTO_VIRGULA,BLOCO, OP_PONTO_VIRGULA, DCLPROC)
                 .quando(BEGIN).derivarEm().toMap());
 
+        //TODO: Verificar declaração de procedure sem parametros
         tmp.put(DEFPAR, new DerivacaoBuilder()
                 .quando(OP_PARENTESE_ABRE).derivarEm(OP_PARENTESE_ABRE, LID, OP_TIPAGEM, INTEGER, OP_PARENTESE_FECHA)
                 .quando(OP_TIPAGEM).derivarEm().toMap());
@@ -280,12 +282,12 @@ public enum Codigo {
                 .quando(OP_PONTO_VIRGULA).derivarEm().toMap());
 
         tmp.put(REPPAR, new DerivacaoBuilder()
-                .quando(OP_PARENTESE_ABRE).derivarEm()
+                .quando(OP_PARENTESE_FECHA).derivarEm()
                 .quando(OP_VIRGULA).derivarEm(OP_VIRGULA, EXPRESSAO, REPPAR).toMap());
 
         tmp.put(ELSEPARTE, new DerivacaoBuilder()
                 .quando(END).derivarEm()
-                .quando(ELSE).derivarEm(END, COMANDO)
+                .quando(ELSE).derivarEm(ELSE, COMANDO)
                 .quando(UNTIL).derivarEm()
                 .quando(OP_PONTO_VIRGULA).derivarEm().toMap());
 
@@ -385,6 +387,7 @@ public enum Codigo {
                 .quando(OP_COLCHETE_FECHA).derivarEm()
                 .quando(OP_PARENTESE_FECHA).derivarEm()
                 .quando(OP_IGUAL).derivarEm()
+                .quando(OP_MAIOR).derivarEm()
                 .quando(OP_MAIOR_OU_IGUAL).derivarEm()
                 .quando(OP_MENOR).derivarEm()
                 .quando(OP_MENOR_OU_IGUAL).derivarEm()
@@ -483,6 +486,9 @@ public enum Codigo {
     }
 
     public String getCaracter() {
+        if(caracter == null){
+            return this.toString();
+        }
         return caracter;
     }
 

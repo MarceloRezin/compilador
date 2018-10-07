@@ -27,6 +27,8 @@ public class TelaEditor extends javax.swing.JFrame {
 
     private File arquivoSelecionado;
     private TokenTableModel modelo = new TokenTableModel(new Stack<>());
+    Stack<Token> derivacoes = null;
+    Stack<Token> parsing = null;
 
     public TelaEditor() {
         initComponents();
@@ -78,10 +80,13 @@ public class TelaEditor extends javax.swing.JFrame {
         
 
         btnPlay.setIcon(new ImageIcon(TelaEditor.class.getResource("/tela/imagens/next.png"))); // NOI18N
+        btnPlay.addActionListener( l -> {
+            runAction(true);
+        });
 
         btnRun.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tela/imagens/Run.png"))); // NOI18N
         btnRun.addActionListener( l -> {
-            runAction();
+            runAction(false);
         });
 
         jScrollPane.setMaximumSize(new java.awt.Dimension(32763217, 32321767));
@@ -153,13 +158,7 @@ public class TelaEditor extends javax.swing.JFrame {
         			.addContainerGap())
         );
         
-        tabelaParse = new JTable(new DefaultTableModel(
-        	new Object[][] {
-        	},
-        	new String[] {
-        		"Código", "Palavra"
-        	}
-        ));
+        tabelaParse = new JTable(modelo);
         scrollPane_1.setViewportView(tabelaParse);
         
         txtCont = new JTextArea();
@@ -213,25 +212,49 @@ public class TelaEditor extends javax.swing.JFrame {
         salvarArq(txtEditor.getText());
     }//GEN-LAST:event_btnSaveActionPerformed
 
-    private void runAction(){
+    private void runAction(boolean stepByStep){
         try {
-            char[] texto = txtEditor.getText().toCharArray();
-            if(texto.length > 0){
-                Stack<Token> derivacoes = AnaliseLexica.analisar(texto);
-                modelo = new TokenTableModel(derivacoes);
 
-                Stack<Token> parsing = AnaliseSintatica.getPilhaParsingInicial();
-
-                System.out.println(parsing);
-
-                while(!derivacoes.isEmpty()){
-                    AnaliseSintatica.analisar(derivacoes, parsing);
-                    System.out.println(parsing);
+            if(stepByStep){
+                if(derivacoes == null || parsing == null){
+                    char[] texto = txtEditor.getText().toCharArray();
+                    derivacoes = AnaliseLexica.analisar(texto);
+                    parsing = AnaliseSintatica.getPilhaParsingInicial();
                 }
 
-                tabelaTokens.setModel(modelo);
+                if(derivacoes.isEmpty()){
+                    derivacoes = null;
+                    parsing = null;
+                }else{
+                    tabelaTokens.setModel(new TokenTableModel(derivacoes));
+                    tabelaParse.setModel(new TokenTableModel(parsing));
+//                    System.err.println(derivacoes);
+//                    System.out.println(parsing);
+                    AnaliseSintatica.analisar(derivacoes, parsing);
+                }
+
+
+            }else{
+                char[] texto = txtEditor.getText().toCharArray();
+                if(texto.length > 0){
+                    Stack<Token> derivacoes = AnaliseLexica.analisar(texto);
+                    modelo = new TokenTableModel(derivacoes);
+
+                    Stack<Token> parsing = AnaliseSintatica.getPilhaParsingInicial();
+
+                    System.out.println(parsing);
+
+                    while(!derivacoes.isEmpty()){
+                        AnaliseSintatica.analisar(derivacoes, parsing);
+                        System.out.println(parsing);
+                    }
+
+                    tabelaTokens.setModel(modelo);
+                }
             }
+
         } catch (Exception e) {
+            e.printStackTrace();
            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }

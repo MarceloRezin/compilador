@@ -32,12 +32,9 @@ public class AnaliseSintatica {
             Map<Codigo, List<Codigo>> y = Codigo.tabelaParsing.get(x);
             if(y != null){
                 List<Codigo> yk = y.get(a);
-
                 if(yk != null){
                     parsing.pop();
-                    Collections.reverse(yk); //Inverte a lista para manter a ordem de derivação
                     parsing.addAll(yk.stream().map( c -> new Token(c)).collect(Collectors.toList()));
-
                     return;
                 }
             }

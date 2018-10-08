@@ -137,42 +137,6 @@ public enum Codigo {
         delimitadores = Collections.unmodifiableMap(tmp);
     }
 
-//    private static final Set<Codigo> codigosTerminais;
-//    static {
-//        Set<Codigo> tmp = new HashSet<>();
-//        tmp.add(PROGRAM);
-//        tmp.add(LABEL);
-//        tmp.add(CONST);
-//        tmp.add(VAR);
-//        tmp.add(PROCEDURE);
-//        tmp.add(BEGIN);
-//        tmp.add(END);
-//        tmp.add(INTEGER);
-//        tmp.add(ARRAY);
-//        tmp.add(OF);
-//        tmp.add(CALL);
-//        tmp.add(GOTO);
-//        tmp.add(IF);
-//        tmp.add(THEN);
-//        tmp.add(ELSE);
-//        tmp.add(WHILE);
-//        tmp.add(DO);
-//        tmp.add(REPEAT);
-//        tmp.add(UNTIL);
-//        tmp.add(READLN);
-//        tmp.add(WRITELN);
-//        tmp.add(OR);
-//        tmp.add(AND);
-//        tmp.add(NOT);
-//        tmp.add(IDENTIFICADOR);
-//        tmp.add(INTEIRO);
-//        tmp.add(FOR);
-//        tmp.add(TO);
-//        tmp.add(CASE);
-//
-//        codigosTerminais = Collections.unmodifiableSet(tmp);
-//    }
-
     public static final Map<Codigo, Map<Codigo, List<Codigo>>> tabelaParsing;
     static {
         HashMap<Codigo, Map<Codigo, List<Codigo>>> tmp = new HashMap<>();

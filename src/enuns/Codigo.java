@@ -200,7 +200,6 @@ public enum Codigo {
                 .quando(IDENTIFICADOR).derivarEm(IDENTIFICADOR, REPIDENT)
                 .toMap());
 
-        //TODO: Analisar erro no exemplo com apenas o writeln
         tmp.put(REPIDENT, new DerivacaoBuilder()
                 .quando(OP_TIPAGEM).derivarEm()
                 .quando(OP_VIRGULA).derivarEm(OP_VIRGULA, IDENTIFICADOR, REPIDENT)
@@ -236,7 +235,6 @@ public enum Codigo {
                 .quando(PROCEDURE).derivarEm(PROCEDURE, IDENTIFICADOR, DEFPAR, OP_PONTO_VIRGULA,BLOCO, OP_PONTO_VIRGULA, DCLPROC)
                 .quando(BEGIN).derivarEm().toMap());
 
-        //TODO: Verificar declaração de procedure sem parametros
         tmp.put(DEFPAR, new DerivacaoBuilder()
                 .quando(OP_PARENTESE_ABRE).derivarEm(OP_PARENTESE_ABRE, LID, OP_TIPAGEM, INTEGER, OP_PARENTESE_FECHA)
                 .quando(OP_TIPAGEM).derivarEm().toMap());
@@ -259,7 +257,7 @@ public enum Codigo {
                 .quando(REPEAT).derivarEm(REPEAT, COMANDO, UNTIL, EXPRESSAO)
                 .quando(UNTIL).derivarEm()
                 .quando(READLN).derivarEm(READLN, OP_PARENTESE_ABRE, VARIAVEL, REPVARIAVEL, OP_PARENTESE_FECHA)
-                .quando(WRITELN).derivarEm(WRITELN, OP_PARENTESE_ABRE, ITEMSAIDA, REPIDENT, OP_PARENTESE_FECHA)
+                .quando(WRITELN).derivarEm(WRITELN, OP_PARENTESE_ABRE, ITEMSAIDA, REPITEM, OP_PARENTESE_FECHA)
                 .quando(IDENTIFICADOR).derivarEm(IDENTIFICADOR, RCOMID)
                 .quando(FOR).derivarEm(FOR, IDENTIFICADOR, OP_RECEBE, EXPRESSAO, TO, EXPRESSAO, DO, COMANDO)
                 .quando(CASE).derivarEm(CASE, EXPRESSAO, OF, CONDCASE, END)

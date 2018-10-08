@@ -182,6 +182,9 @@ public class TelaEditor extends javax.swing.JFrame {
 			else if(arg0.getKeyCode() == arg0.VK_DELETE) {
 					contaLinhaBack(txtEditor,txtCont);	
 				}
+			else if(arg0.getKeyCode() == arg0.VK_CONTROL) {
+					contaLinhaBack(txtEditor,txtCont);	
+				}
         	}
         });
         jScrollPane.setViewportView(txtEditor);

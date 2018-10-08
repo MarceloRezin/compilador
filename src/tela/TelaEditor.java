@@ -50,6 +50,9 @@ public class TelaEditor extends javax.swing.JFrame {
         //Alinha os itens da tabela
         ((DefaultTableCellRenderer) tabelaTokens.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
         tabelaTokens.setDefaultRenderer(Object.class, new CellRender());
+        
+        ((DefaultTableCellRenderer) tabelaParse.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+        tabelaParse.setDefaultRenderer(Object.class, new CellRender());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(238, 238, 238));
@@ -125,11 +128,11 @@ public class TelaEditor extends javax.swing.JFrame {
         							.addComponent(btnRun, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
         							.addPreferredGap(ComponentPlacement.RELATED)
         							.addComponent(btnPlay, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
-        						.addComponent(jScrollPane, GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE))
+        						.addComponent(jScrollPane, GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE))
         					.addPreferredGap(ComponentPlacement.RELATED)
-        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        						.addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 399, GroupLayout.PREFERRED_SIZE)
-        						.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 399, GroupLayout.PREFERRED_SIZE))))
+        					.addGroup(layout.createParallelGroup(Alignment.TRAILING, false)
+        						.addComponent(jScrollPane2, 0, 0, Short.MAX_VALUE)
+        						.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE))))
         			.addContainerGap())
         );
         layout.setVerticalGroup(

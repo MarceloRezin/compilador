@@ -77,7 +77,9 @@ public class TelaEditor extends javax.swing.JFrame {
         });
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tela/imagens/x-button.png"))); // NOI18N
-        
+        btnCancelar.addActionListener( l -> {
+            reset();
+        });
 
         btnPlay.setIcon(new ImageIcon(TelaEditor.class.getResource("/tela/imagens/next.png"))); // NOI18N
         btnPlay.addActionListener( l -> {
@@ -358,4 +360,12 @@ public class TelaEditor extends javax.swing.JFrame {
 		linhas += i;
 		cont.setText(linhas);;
 	}
+
+	private void reset(){
+        derivacoes = null;
+        parsing = null;
+
+        tabelaTokens.setModel(new TokenTableModel(new Stack<>()));
+        tabelaParse.setModel(new TokenTableModel(new Stack<>()));
+    }
 }

@@ -63,12 +63,12 @@ public class Automato {
             throw new AnaliseLexicaException("Um bloco não foi fechado!");
         }
 
-        Token token = retorno(estadoAtual, builderPalavra.toString());
+        Token token = retorno(estadoAtual, builderPalavra.toString(), leitor);
         token.setPosicao(leitor.getLinha(), leitor.getColuna());
         return token;
     }
 
-    private Token retorno(Estado estadoFinal, String palavra) throws AnaliseLexicaException{
+    private Token retorno(Estado estadoFinal, String palavra, Leitor leitor) throws AnaliseLexicaException{
         TipoRetorno tipo = estadoFinal.getRetornoEspecifico();
 
         if(tipo != null){
@@ -93,7 +93,7 @@ public class Automato {
             }
 
             if(tipo == TipoRetorno.ERRO){
-                throw new AnaliseLexicaException("Número inválido!");
+                throw new AnaliseLexicaException("Número inválido na posição: " + leitor.getLinha() + " | " + leitor.getColuna());
             }
         }
 

@@ -63,7 +63,9 @@ public class Automato {
             throw new AnaliseLexicaException("Um bloco não foi fechado!");
         }
 
-        return retorno(estadoAtual, builderPalavra.toString());
+        Token token = retorno(estadoAtual, builderPalavra.toString());
+        token.setPosicao(leitor.getLinha(), leitor.getColuna());
+        return token;
     }
 
     private Token retorno(Estado estadoFinal, String palavra) throws AnaliseLexicaException{

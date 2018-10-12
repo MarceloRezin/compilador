@@ -1,6 +1,7 @@
 package analise;
 
 import enuns.Codigo;
+import exceptions.AnaliseSintaticaException;
 import token.Token;
 
 import java.util.Collections;
@@ -17,9 +18,20 @@ public class AnaliseSintatica {
         return parsing;
     }
 
-    public static void analisar(Stack<Token> derivacoes, Stack<Token> parsing) throws Exception {
+    public static void analisar(Stack<Token> derivacoes, Stack<Token> parsing) throws AnaliseSintaticaException {
+
+        if(!derivacoes.isEmpty() && parsing.isEmpty()){
+            throw new AnaliseSintaticaException("Código fora do escopo");
+        }
+
         Codigo x = parsing.peek().getCodigo();
-        Codigo a = derivacoes.peek().getCodigo();
+
+        if(derivacoes.isEmpty() && !parsing.isEmpty()){
+            throw new AnaliseSintaticaException("Final prematuro -> Esperado: " + x.getCaracter());
+        }
+
+        Token i = derivacoes.peek();
+        Codigo a = i.getCodigo();
 
         if(x.isTerminal()){
             if(x.equals(a)){
@@ -40,6 +52,6 @@ public class AnaliseSintatica {
             }
         }
 
-        throw new Exception("Erro");
+        throw new AnaliseSintaticaException("Erro em " + i.getLinha() + " | " + i.getColuna() + " -> Esperado: " + x.getCaracter() + " Encontrado: " + a.getCaracter());
     }
 }

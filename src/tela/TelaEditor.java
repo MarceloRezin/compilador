@@ -4,6 +4,7 @@ import analise.AnaliseLexica;
 import analise.AnaliseSintatica;
 import arquivo.Arquivo;
 import exceptions.AnaliseLexicaException;
+import exceptions.AnaliseSintaticaException;
 import token.Token;
 
 import java.io.File;
@@ -20,8 +21,6 @@ import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.Dimension;
-import javax.swing.table.TableModel;
-import javax.swing.table.DefaultTableModel;
 
 public class TelaEditor extends javax.swing.JFrame {
 
@@ -46,6 +45,7 @@ public class TelaEditor extends javax.swing.JFrame {
         jScrollPane = new javax.swing.JScrollPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaTokens = new javax.swing.JTable(modelo);
+        tabelaParse = new javax.swing.JTable(modelo);
 
         //Alinha os itens da tabela
         ((DefaultTableCellRenderer) tabelaTokens.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
@@ -162,8 +162,7 @@ public class TelaEditor extends javax.swing.JFrame {
         			.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE)
         			.addContainerGap())
         );
-        
-        tabelaParse = new JTable(modelo);
+
         scrollPane_1.setViewportView(tabelaParse);
         
         txtCont = new JTextArea();
@@ -222,48 +221,57 @@ public class TelaEditor extends javax.swing.JFrame {
 
     private void runAction(boolean stepByStep){
         try {
-
             if(stepByStep){
                 if(derivacoes == null || parsing == null){
+                    txtConsole.setText("");
+                    txtConsole.append("[Compilação iniciada]");
                     char[] texto = txtEditor.getText().toCharArray();
                     derivacoes = AnaliseLexica.analisar(texto);
+                    txtConsole.append("\nAnálise léxica [OK]");
                     parsing = AnaliseSintatica.getPilhaParsingInicial();
                 }
 
-                if(derivacoes.isEmpty()){
+                if(derivacoes.isEmpty() && parsing.isEmpty()){
                     derivacoes = null;
                     parsing = null;
+
+                    tabelaTokens.setModel(new TokenTableModel(new Stack<>()));
+                    tabelaParse.setModel(new TokenTableModel(new Stack<>()));
+
+                    txtConsole.append("\nAnálise Sintática [OK]");
+                    txtConsole.append("\n[Compilação Concluída]");
                 }else{
                     tabelaTokens.setModel(new TokenTableModel(derivacoes));
                     tabelaParse.setModel(new TokenTableModel(parsing));
-//                    System.err.println(derivacoes);
-//                    System.out.println(parsing);
                     AnaliseSintatica.analisar(derivacoes, parsing);
                 }
-
-
             }else{
+                txtConsole.setText("");
+                txtConsole.append("[Compilação iniciada]");
+
                 char[] texto = txtEditor.getText().toCharArray();
                 if(texto.length > 0){
                     Stack<Token> derivacoes = AnaliseLexica.analisar(texto);
+                    txtConsole.append("\nAnálise léxica [OK]");
+
                     modelo = new TokenTableModel(derivacoes);
 
                     Stack<Token> parsing = AnaliseSintatica.getPilhaParsingInicial();
-
-                    System.out.println(parsing);
-
-                    while(!derivacoes.isEmpty()){
+                    while(!derivacoes.isEmpty() || !parsing.isEmpty()){
                         AnaliseSintatica.analisar(derivacoes, parsing);
-                        System.out.println(parsing);
                     }
 
                     tabelaTokens.setModel(modelo);
+
+                    txtConsole.append("\nAnálise Sintática [OK]");
+                    txtConsole.append("\n[Compilação Concluída]");
                 }
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-           JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (AnaliseLexicaException le) {
+            txtConsole.append("\n" + le.getMessage());
+        } catch (AnaliseSintaticaException se) {
+            txtConsole.append("\n" + se.getMessage());
         }
     }
 
@@ -373,5 +381,7 @@ public class TelaEditor extends javax.swing.JFrame {
 
         tabelaTokens.setModel(new TokenTableModel(new Stack<>()));
         tabelaParse.setModel(new TokenTableModel(new Stack<>()));
+
+        txtConsole.setText("");
     }
 }

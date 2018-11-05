@@ -2,13 +2,15 @@ package analise;
 
 import enuns.Categoria;
 import enuns.Codigo;
+import token.Token;
+
+import java.util.List;
 
 public class TabelaSimbolo {
 
     private String nome;
     private Categoria categoria;
     private Codigo tipo;
-    private int nivel;
 
     public String getNome() {
         return nome;
@@ -34,11 +36,12 @@ public class TabelaSimbolo {
         this.tipo = tipo;
     }
 
-    public int getNivel() {
-        return nivel;
-    }
+    public static TabelaSimbolo toTabelaSimbolo(Token token, Categoria categoria, Codigo tipo){
+        TabelaSimbolo tabelaSimbolo = new TabelaSimbolo();
+        tabelaSimbolo.setNome(token.getPalavra());
+        tabelaSimbolo.setCategoria(categoria);
+        tabelaSimbolo.setTipo(tipo);
 
-    public void setNivel(int nivel) {
-        this.nivel = nivel;
+        return tabelaSimbolo;
     }
 }

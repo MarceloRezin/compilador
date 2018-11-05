@@ -30,6 +30,8 @@ public class AnaliseSintatica {
             throw new AnaliseSintaticaException("Final prematuro -> Esperado: " + x.getCaracter());
         }
 
+        AnaliseSemantica.controlarNivel(x);
+
         Token i = derivacoes.peek();
         Codigo a = i.getCodigo();
 

@@ -12,6 +12,12 @@ public class TabelaSimbolo {
     private Categoria categoria;
     private Codigo tipo;
 
+    public TabelaSimbolo(String nome, Categoria categoria, Codigo tipo) {
+        this.nome = nome;
+        this.categoria = categoria;
+        this.tipo = tipo;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -36,12 +42,12 @@ public class TabelaSimbolo {
         this.tipo = tipo;
     }
 
-    public static TabelaSimbolo toTabelaSimbolo(Token token, Categoria categoria, Codigo tipo){
-        TabelaSimbolo tabelaSimbolo = new TabelaSimbolo();
-        tabelaSimbolo.setNome(token.getPalavra());
-        tabelaSimbolo.setCategoria(categoria);
-        tabelaSimbolo.setTipo(tipo);
-
-        return tabelaSimbolo;
-    }
+//    public static TabelaSimbolo toTabelaSimbolo(Token token, Categoria categoria, Codigo tipo){
+//        TabelaSimbolo tabelaSimbolo = new TabelaSimbolo();
+//        tabelaSimbolo.setNome(token.getPalavra());
+//        tabelaSimbolo.setCategoria(categoria);
+//        tabelaSimbolo.setTipo(tipo);
+//
+//        return tabelaSimbolo;
+//    }
 }

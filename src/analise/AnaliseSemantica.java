@@ -2,6 +2,7 @@ package analise;
 
 import enuns.Categoria;
 import enuns.Codigo;
+import exceptions.AnaliseSintaticaException;
 import token.Token;
 
 import java.util.*;
@@ -12,6 +13,9 @@ public class AnaliseSemantica {
     //Nivel , Tabela
     private static Map<Integer, List<TabelaSimbolo>> tabelasSimbolos = new HashMap<>();
     private static Codigo codigoAnterior;
+
+    //Flags
+    private static boolean program = false;
 
     public static int getNivel() {
         return nivel;
@@ -41,52 +45,50 @@ public class AnaliseSemantica {
         }
     }
 
-    public static void insertSimbolo(TabelaSimbolo... tabelaSimbolo){
-        List<TabelaSimbolo> simbolos = tabelasSimbolos.get(nivel);
+    public static void insertSimbolo(TabelaSimbolo... tabelaSimbolo) throws AnaliseSintaticaException{
+        List<TabelaSimbolo> tabelasAInserir = new ArrayList<>(Arrays.asList(tabelaSimbolo));
 
+        for(TabelaSimbolo ts: tabelasAInserir){
+            if(isIdentificadorExistente(ts)){
+                throw new AnaliseSintaticaException("Identificador já existente");
+            }
+        }
+
+        List<TabelaSimbolo> simbolos = tabelasSimbolos.get(nivel);
         if (simbolos == null) {
-            tabelasSimbolos.put(nivel, new ArrayList<>(Arrays.asList(tabelaSimbolo)));
+            tabelasSimbolos.put(nivel, tabelasAInserir);
         }else{
-            simbolos.addAll(new ArrayList<>(Arrays.asList(tabelaSimbolo)));
+            simbolos.addAll(tabelasAInserir);
         }
     }
 
-    public static void isIdentificadorExistente(Token token){
+    public static boolean isIdentificadorExistente(TabelaSimbolo tabelaSimbolo){
         int aux = nivel;
 
         for(int i=aux; i>-1; i--){
-            
+            List<TabelaSimbolo> simboloList = tabelasSimbolos.get(i);
+
+            for(TabelaSimbolo ts: simboloList){
+                if(ts.equals(tabelaSimbolo)){
+                    return true;
+                }
+            }
         }
+
+        return false;
     }
 
-    public static void classificarIdentificador(Codigo codigo, Token token) {
-        if(codigo == Codigo.IDENTIFICADOR){
-            if(codigoAnterior == Codigo.PROGRAM){
-                insertSimbolo(new TabelaSimbolo(token.getPalavra(), Categoria.VARIAVEL, Codigo.PROGRAM));
-            }else if(codigoAnterior == Codigo.VAR || !tokensTmp.isEmpty()){
-                tokensTmp.add(token);
-            }else if(codigoAnterior == Codigo.PROCEDURE){
-                insertSimbolo(new TabelaSimbolo(token.getPalavra(), Categoria.PROCEDURE, Codigo.PROCEDURE));
-                addNivel();
-            }else{
-                tokensTmp.add(token);
-            }
-        }else if(codigo == Codigo.OP_PONTO_VIRGULA && !tokensTmp.isEmpty()){
+    public static void classificarIdentificador(Codigo codigo, Token token) throws AnaliseSintaticaException{
 
-        }else if(codigo == Codigo.OP_TIPAGEM){
-
+        if(codigo == Codigo.PROGRAM){
+            program = true;
         }
 
-        else if(codigo == Codigo.INTEGER){
-            TabelaSimbolo[] simbolos = new TabelaSimbolo[tokensTmp.size()];
-
-            for(int i=0; i<tokensTmp.size(); i++){
-                simbolos[i] = new TabelaSimbolo(tokensTmp.get(i).getPalavra(), Categoria.VARIAVEL, Codigo.INTEGER);
-            }
-
-            insertSimbolo(simbolos);
-
-            tokensTmp.clear();
+        if(codigo == Codigo.IDENTIFICADOR){
+           if(program){
+              insertSimbolo(new TabelaSimbolo(token.getPalavra(), Categoria.VARIAVEL, Codigo.PROGRAM));
+              program = false;
+           }
         }
 
         codigoAnterior = codigo;

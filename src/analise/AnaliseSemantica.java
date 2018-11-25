@@ -193,7 +193,7 @@ public class AnaliseSemantica {
                    varUtilizada = ts;
                }else{
                    if(ts.getCategoria() != varUtilizada.getCategoria()){
-                       if(ts.getCategoria() != Categoria.PARAMETRO || varUtilizada.getTipo() != Codigo.INTEGER){
+                       if( (ts.getCategoria() != Categoria.PARAMETRO && ts.getCategoria() != Categoria.CONSTANTE ) || varUtilizada.getTipo() != Codigo.INTEGER){
                            throw new AnaliseSintaticaException("Atribuição inválida -> Esperado: " + varUtilizada.getTipo() + " Encontrado: " +  ts.getCategoria());
                        }
                    }
@@ -223,6 +223,8 @@ public class AnaliseSemantica {
 
                 tokensTmp.clear();
             }
+        }else if(codigo == Codigo.BEGIN){
+            varUtilizada = null;
         }
     }
 

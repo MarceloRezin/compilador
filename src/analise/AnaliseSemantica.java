@@ -17,6 +17,7 @@ public class AnaliseSemantica {
     //Flags
     private static boolean program = false;
     private static boolean label = false;
+    private static boolean constant = false;
 
     public static int getNivel() {
         return nivel;
@@ -39,7 +40,7 @@ public class AnaliseSemantica {
     }
 
     public static void controlarNivel(Codigo codigo) {
-        if(codigo == Codigo.BEGIN){
+        if(codigo == Codigo.BEGIN && nivel != 1){
             addNivel();
         }else if(codigo == Codigo.END) {
             subNivel();
@@ -88,6 +89,11 @@ public class AnaliseSemantica {
 
             case LABEL:
                 label = true;
+                constant = false;
+                break;
+
+            case CONST:
+                constant = true;
                 break;
 
         }
@@ -100,12 +106,15 @@ public class AnaliseSemantica {
               program = false;
            }else if(label){
                insertSimbolo(new TabelaSimbolo(token.getPalavra(), Categoria.ROTULO, Codigo.LABEL));
+           }else if(constant){
+               insertSimbolo(new TabelaSimbolo(token.getPalavra(), Categoria.CONSTANTE, Codigo.CONST));
            }
         }else if(codigo == Codigo.OP_PONTO_VIRGULA){
             if(label){
                 label = false;
             }
         }
+
 
         codigoAnterior = codigo;
     }

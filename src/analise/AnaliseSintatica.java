@@ -1,6 +1,7 @@
 package analise;
 
 import enuns.Codigo;
+import exceptions.AnaliseSemanticaException;
 import exceptions.AnaliseSintaticaException;
 import token.Token;
 
@@ -18,7 +19,7 @@ public class AnaliseSintatica {
         return parsing;
     }
 
-    public static void analisar(Stack<Token> derivacoes, Stack<Token> parsing) throws AnaliseSintaticaException {
+    public static void analisar(Stack<Token> derivacoes, Stack<Token> parsing) throws AnaliseSintaticaException, AnaliseSemanticaException {
 
         if(!derivacoes.isEmpty() && parsing.isEmpty()){
             throw new AnaliseSintaticaException("Código fora do escopo");
@@ -33,7 +34,11 @@ public class AnaliseSintatica {
         Token i = derivacoes.peek();
         Codigo a = i.getCodigo();
 
-        AnaliseSemantica.classificarIdentificador(x, i);
+        try {
+            AnaliseSemantica.classificarIdentificador(x, i);
+        }catch(AnaliseSemanticaException e){
+            throw new AnaliseSemanticaException("Erro em " + i.getLinha() + " | " + i.getColuna() + " -> " + e.getMessage(), true);
+        }
 
         if(x.isTerminal()){
             if(x.equals(a)){

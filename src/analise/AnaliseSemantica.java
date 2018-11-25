@@ -2,7 +2,7 @@ package analise;
 
 import enuns.Categoria;
 import enuns.Codigo;
-import exceptions.AnaliseSintaticaException;
+import exceptions.AnaliseSemanticaException;
 import token.Token;
 
 import java.util.*;
@@ -46,19 +46,19 @@ public class AnaliseSemantica {
     }
 
     public static void controlarNivel(Codigo codigo) {
-        if(codigo == Codigo.BEGIN && nivel != 1){
+        if((codigo == Codigo.BEGIN && nivel != 1) || codigo == Codigo.THEN || codigo == Codigo.ELSE){
             addNivel();
         }else if(codigo == Codigo.END) {
             subNivel();
         }
     }
 
-    public static void insertSimbolo(TabelaSimbolo... tabelaSimbolo) throws AnaliseSintaticaException{
+    public static void insertSimbolo(TabelaSimbolo... tabelaSimbolo) throws AnaliseSemanticaException{
         List<TabelaSimbolo> tabelasAInserir = new ArrayList<>(Arrays.asList(tabelaSimbolo));
 
         for(TabelaSimbolo ts: tabelasAInserir){
             if(isIdentificadorExistente(ts)){
-                throw new AnaliseSintaticaException("Identificador já existente");
+                throw new AnaliseSemanticaException("Identificador já existente");
             }
         }
 
@@ -110,7 +110,7 @@ public class AnaliseSemantica {
         return null;
     }
 
-    public static void classificarIdentificador(Codigo codigo, Token token) throws AnaliseSintaticaException{
+    public static void classificarIdentificador(Codigo codigo, Token token) throws AnaliseSemanticaException {
 
         switch (codigo){
             case PROGRAM:
@@ -176,9 +176,9 @@ public class AnaliseSemantica {
                TabelaSimbolo ts = getByPalavra(token.getPalavra());
 
                if(ts == null){
-                   throw new AnaliseSintaticaException("Procedure " + token.getPalavra() + " não declarada");
+                   throw new AnaliseSemanticaException("Procedure " + token.getPalavra() + " não declarada");
                }else if(ts.getCategoria() != Categoria.PROCEDURE){
-                   throw new AnaliseSintaticaException("Chamada inválida -> " + token.getPalavra() + " não é uma procedure");
+                   throw new AnaliseSemanticaException("Chamada inválida -> " + token.getPalavra() + " não é uma procedure");
                }else{
                    call = false;
                }
@@ -186,7 +186,7 @@ public class AnaliseSemantica {
                TabelaSimbolo ts = getByPalavra(token.getPalavra());
 
                if(ts == null){
-                   throw new AnaliseSintaticaException("Identificador " + token.getPalavra() + " não declarado");
+                   throw new AnaliseSemanticaException("Identificador " + token.getPalavra() + " não declarado");
                }
 
                if(varUtilizada == null){
@@ -194,7 +194,7 @@ public class AnaliseSemantica {
                }else{
                    if(ts.getCategoria() != varUtilizada.getCategoria()){
                        if( (ts.getCategoria() != Categoria.PARAMETRO && ts.getCategoria() != Categoria.CONSTANTE ) || varUtilizada.getTipo() != Codigo.INTEGER){
-                           throw new AnaliseSintaticaException("Atribuição inválida -> Esperado: " + varUtilizada.getTipo() + " Encontrado: " +  ts.getCategoria());
+                           throw new AnaliseSemanticaException("Atribuição inválida -> Esperado: " + varUtilizada.getTipo() + " Encontrado: " +  ts.getCategoria());
                        }
                    }
                }

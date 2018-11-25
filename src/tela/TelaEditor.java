@@ -5,6 +5,7 @@ import analise.AnaliseSemantica;
 import analise.AnaliseSintatica;
 import arquivo.Arquivo;
 import exceptions.AnaliseLexicaException;
+import exceptions.AnaliseSemanticaException;
 import exceptions.AnaliseSintaticaException;
 import token.Token;
 
@@ -275,6 +276,8 @@ public class TelaEditor extends javax.swing.JFrame {
             txtConsole.append("\n" + le.getMessage());
         } catch (AnaliseSintaticaException se) {
             txtConsole.append("\n" + se.getMessage());
+        }catch (AnaliseSemanticaException as) {
+            txtConsole.append("\n" + as.getMessage());
         }
     }
 

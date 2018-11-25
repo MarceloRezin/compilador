@@ -84,6 +84,8 @@ public class AnaliseSemantica {
             program = true;
         }
 
+        controlarNivel(codigo);
+
         if(codigo == Codigo.IDENTIFICADOR){
            if(program){
               insertSimbolo(new TabelaSimbolo(token.getPalavra(), Categoria.VARIAVEL, Codigo.PROGRAM));

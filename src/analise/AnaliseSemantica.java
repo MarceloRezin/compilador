@@ -19,6 +19,7 @@ public class AnaliseSemantica {
     private static boolean label = false;
     private static boolean constant = false;
     private static boolean var = false;
+    private static boolean procedure = false;
 
     public static int getNivel() {
         return nivel;
@@ -106,7 +107,13 @@ public class AnaliseSemantica {
             case VAR:
                 var = true;
                 constant = false;
+                break;
 
+            case PROCEDURE:
+                procedure = true;
+                constant = false;
+                var = false;
+                break;
         }
 
         controlarNivel(codigo);
@@ -121,6 +128,10 @@ public class AnaliseSemantica {
                insertSimbolo(new TabelaSimbolo(token.getPalavra(), Categoria.CONSTANTE, Codigo.CONST));
            }else if(var){
                tokensTmp.add(token);
+           }else if(procedure){
+               insertSimbolo(new TabelaSimbolo(token.getPalavra(), Categoria.PROCEDURE, Codigo.PROCEDURE));
+               procedure = false;
+               addNivel();
            }
         }else if(codigo == Codigo.OP_PONTO_VIRGULA){
             if(label){
@@ -157,5 +168,6 @@ public class AnaliseSemantica {
         label = false;
         constant = false;
         var = false;
+        procedure = false;
     }
 }

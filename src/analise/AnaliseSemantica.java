@@ -71,6 +71,10 @@ public class AnaliseSemantica {
         for(int i=aux; i>-1; i--){
             List<TabelaSimbolo> simboloList = tabelasSimbolos.get(i);
 
+            if(simboloList == null){
+                continue;
+            }
+
             for(TabelaSimbolo ts: simboloList){
                 if(ts.equals(tabelaSimbolo)){
                     return true;

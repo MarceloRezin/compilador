@@ -5,6 +5,7 @@ import enuns.Codigo;
 import token.Token;
 
 import java.util.List;
+import java.util.Objects;
 
 public class TabelaSimbolo {
 
@@ -42,7 +43,18 @@ public class TabelaSimbolo {
         this.tipo = tipo;
     }
 
-//    public static TabelaSimbolo toTabelaSimbolo(Token token, Categoria categoria, Codigo tipo){
+    @Override
+    public boolean equals(Object obj) {
+
+        if (obj == this) return true;
+        if (!(obj instanceof TabelaSimbolo)) {
+            return false;
+        }
+        TabelaSimbolo tabelaSimbolo = (TabelaSimbolo) obj;
+        return  Objects.equals(nome, tabelaSimbolo.nome);
+    }
+
+    //    public static TabelaSimbolo toTabelaSimbolo(Token token, Categoria categoria, Codigo tipo){
 //        TabelaSimbolo tabelaSimbolo = new TabelaSimbolo();
 //        tabelaSimbolo.setNome(token.getPalavra());
 //        tabelaSimbolo.setCategoria(categoria);

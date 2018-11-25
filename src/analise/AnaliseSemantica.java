@@ -20,6 +20,7 @@ public class AnaliseSemantica {
     private static boolean var = false;
     private static boolean procedure = false;
     private static boolean parametro = false;
+    private static boolean call = false;
 
     private static TabelaSimbolo varUtilizada;
 
@@ -40,6 +41,7 @@ public class AnaliseSemantica {
     }
 
     public static int subNivel() {
+        tabelasSimbolos.remove(nivel);
         return nivel--;
     }
 
@@ -137,6 +139,18 @@ public class AnaliseSemantica {
                 var = false;
                 break;
 
+            case CALL:
+                call = true;
+                constant = false;
+                var = false;
+                break;
+
+            case BEGIN:
+                constant = false;
+                var = false;
+                break;
+
+
         }
 
         controlarNivel(codigo);
@@ -158,6 +172,16 @@ public class AnaliseSemantica {
                addNivel();
            }else if(parametro){
                insertSimbolo(new TabelaSimbolo(token.getPalavra(), Categoria.PARAMETRO, Codigo.INTEGER));
+           }else if(call){
+               TabelaSimbolo ts = getByPalavra(token.getPalavra());
+
+               if(ts == null){
+                   throw new AnaliseSintaticaException("Procedure " + token.getPalavra() + " não declarada");
+               }else if(ts.getCategoria() != Categoria.PROCEDURE){
+                   throw new AnaliseSintaticaException("Chamada inválida -> " + token.getPalavra() + " não é uma procedure");
+               }else{
+                   call = false;
+               }
            }else{
                TabelaSimbolo ts = getByPalavra(token.getPalavra());
 
@@ -169,7 +193,9 @@ public class AnaliseSemantica {
                    varUtilizada = ts;
                }else{
                    if(ts.getCategoria() != varUtilizada.getCategoria()){
-                       throw new AnaliseSintaticaException("Atribuição inválida -> Esperado: " + token.getCodigo() + " Encontrado: " + varUtilizada.getTipo());
+                       if(ts.getCategoria() != Categoria.PARAMETRO || varUtilizada.getTipo() != Codigo.INTEGER){
+                           throw new AnaliseSintaticaException("Atribuição inválida -> Esperado: " + varUtilizada.getTipo() + " Encontrado: " +  ts.getCategoria());
+                       }
                    }
                }
            }
@@ -211,5 +237,6 @@ public class AnaliseSemantica {
         procedure = false;
         parametro = false;
         varUtilizada = null;
+        call = false;
     }
 }

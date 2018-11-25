@@ -144,4 +144,14 @@ public class AnaliseSemantica {
         codigoAnterior = codigo;
     }
 
+    public static void resetAll(){
+        nivel = 0;
+        tokensTmp.clear();
+        tabelasSimbolos.clear();
+        codigoAnterior = null;
+        program = false;
+        label = false;
+        constant = false;
+        var = false;
+    }
 }

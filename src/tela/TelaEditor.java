@@ -1,6 +1,7 @@
 package tela;
 
 import analise.AnaliseLexica;
+import analise.AnaliseSemantica;
 import analise.AnaliseSintatica;
 import arquivo.Arquivo;
 import exceptions.AnaliseLexicaException;
@@ -223,6 +224,7 @@ public class TelaEditor extends javax.swing.JFrame {
         try {
             if(stepByStep){
                 if(derivacoes == null || parsing == null){
+                    AnaliseSemantica.resetAll();
                     txtConsole.setText("");
                     txtConsole.append("[Compilação iniciada]");
                     char[] texto = txtEditor.getText().toCharArray();
@@ -246,6 +248,7 @@ public class TelaEditor extends javax.swing.JFrame {
                     AnaliseSintatica.analisar(derivacoes, parsing);
                 }
             }else{
+                AnaliseSemantica.resetAll();
                 txtConsole.setText("");
                 txtConsole.append("[Compilação iniciada]");
 

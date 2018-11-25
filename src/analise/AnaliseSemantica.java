@@ -12,7 +12,6 @@ public class AnaliseSemantica {
     private static List<Token> tokensTmp = new ArrayList<>();
     //Nivel , Tabela
     private static Map<Integer, List<TabelaSimbolo>> tabelasSimbolos = new HashMap<>();
-    private static Codigo codigoAnterior;
 
     //Flags
     private static boolean program = false;
@@ -20,6 +19,9 @@ public class AnaliseSemantica {
     private static boolean constant = false;
     private static boolean var = false;
     private static boolean procedure = false;
+    private static boolean parametro = false;
+
+    private static TabelaSimbolo varUtilizada;
 
     public static int getNivel() {
         return nivel;
@@ -66,7 +68,7 @@ public class AnaliseSemantica {
         }
     }
 
-    public static boolean isIdentificadorExistente(TabelaSimbolo tabelaSimbolo){
+    private static boolean isIdentificadorExistente(TabelaSimbolo tabelaSimbolo){
         int aux = nivel;
 
         for(int i=aux; i>-1; i--){
@@ -84,6 +86,26 @@ public class AnaliseSemantica {
         }
 
         return false;
+    }
+
+    private static TabelaSimbolo getByPalavra(String palavra){
+        int aux = nivel;
+
+        for(int i=aux; i>-1; i--){
+            List<TabelaSimbolo> simboloList = tabelasSimbolos.get(i);
+
+            if(simboloList == null){
+                continue;
+            }
+
+            for(TabelaSimbolo ts: simboloList){
+                if(ts.getNome().toUpperCase().equals(palavra.toUpperCase())){
+                    return ts;
+                }
+            }
+        }
+
+        return null;
     }
 
     public static void classificarIdentificador(Codigo codigo, Token token) throws AnaliseSintaticaException{
@@ -114,6 +136,7 @@ public class AnaliseSemantica {
                 constant = false;
                 var = false;
                 break;
+
         }
 
         controlarNivel(codigo);
@@ -131,11 +154,32 @@ public class AnaliseSemantica {
            }else if(procedure){
                insertSimbolo(new TabelaSimbolo(token.getPalavra(), Categoria.PROCEDURE, Codigo.PROCEDURE));
                procedure = false;
+               parametro = true;
                addNivel();
+           }else if(parametro){
+               insertSimbolo(new TabelaSimbolo(token.getPalavra(), Categoria.PARAMETRO, Codigo.INTEGER));
+           }else{
+               TabelaSimbolo ts = getByPalavra(token.getPalavra());
+
+               if(ts == null){
+                   throw new AnaliseSintaticaException("Identificador " + token.getPalavra() + " não declarado");
+               }
+
+               if(varUtilizada == null){
+                   varUtilizada = ts;
+               }else{
+                   if(ts.getCategoria() != varUtilizada.getCategoria()){
+                       throw new AnaliseSintaticaException("Atribuição inválida -> Esperado: " + token.getCodigo() + " Encontrado: " + varUtilizada.getTipo());
+                   }
+               }
            }
         }else if(codigo == Codigo.OP_PONTO_VIRGULA){
             if(label){
                 label = false;
+            }else if(parametro){
+                parametro = false;
+            }else if(varUtilizada != null){
+                varUtilizada = null;
             }
         }else if(codigo == Codigo.INTEGER){
             if(var){
@@ -154,20 +198,18 @@ public class AnaliseSemantica {
                 tokensTmp.clear();
             }
         }
-
-
-        codigoAnterior = codigo;
     }
 
     public static void resetAll(){
         nivel = 0;
         tokensTmp.clear();
         tabelasSimbolos.clear();
-        codigoAnterior = null;
         program = false;
         label = false;
         constant = false;
         var = false;
         procedure = false;
+        parametro = false;
+        varUtilizada = null;
     }
 }

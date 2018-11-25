@@ -16,6 +16,7 @@ public class AnaliseSemantica {
 
     //Flags
     private static boolean program = false;
+    private static boolean label = false;
 
     public static int getNivel() {
         return nivel;
@@ -80,8 +81,15 @@ public class AnaliseSemantica {
 
     public static void classificarIdentificador(Codigo codigo, Token token) throws AnaliseSintaticaException{
 
-        if(codigo == Codigo.PROGRAM){
-            program = true;
+        switch (codigo){
+            case PROGRAM:
+                program = true;
+                break;
+
+            case LABEL:
+                label = true;
+                break;
+
         }
 
         controlarNivel(codigo);
@@ -90,7 +98,13 @@ public class AnaliseSemantica {
            if(program){
               insertSimbolo(new TabelaSimbolo(token.getPalavra(), Categoria.VARIAVEL, Codigo.PROGRAM));
               program = false;
+           }else if(label){
+               insertSimbolo(new TabelaSimbolo(token.getPalavra(), Categoria.ROTULO, Codigo.LABEL));
            }
+        }else if(codigo == Codigo.OP_PONTO_VIRGULA){
+            if(label){
+                label = false;
+            }
         }
 
         codigoAnterior = codigo;

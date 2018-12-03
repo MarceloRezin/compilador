@@ -228,7 +228,9 @@ public class AnaliseSemantica {
         }else if(codigo == Codigo.INTEIRO){
             if(varUtilizada != null){
                 if(varUtilizada.getTipo() != codigo){
-                    throw new AnaliseSemanticaException("Atribuição inválida -> Esperado: " + varUtilizada.getTipo() + " Encontrado: " +  codigo);
+                    if(varUtilizada.getTipo() != Codigo.ARRAY || codigo != Codigo.INTEIRO){
+                        throw new AnaliseSemanticaException("Atribuição inválida -> Esperado: " + varUtilizada.getTipo() + " Encontrado: " +  codigo);
+                    }
                 }
 
             }

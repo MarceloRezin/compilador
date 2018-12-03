@@ -171,7 +171,7 @@ public class AnaliseSemantica {
                parametro = true;
                addNivel();
            }else if(parametro){
-               insertSimbolo(new TabelaSimbolo(token.getPalavra(), Categoria.PARAMETRO, Codigo.INTEGER));
+               insertSimbolo(new TabelaSimbolo(token.getPalavra(), Categoria.PARAMETRO, Codigo.INTEIRO));
            }else if(call){
                TabelaSimbolo ts = getByPalavra(token.getPalavra());
 
@@ -193,7 +193,7 @@ public class AnaliseSemantica {
                    varUtilizada = ts;
                }else{
                    if(ts.getCategoria() != varUtilizada.getCategoria()){
-                       if( (ts.getCategoria() != Categoria.PARAMETRO && ts.getCategoria() != Categoria.CONSTANTE ) || varUtilizada.getTipo() != Codigo.INTEGER){
+                       if( (ts.getCategoria() != Categoria.PARAMETRO && ts.getCategoria() != Categoria.CONSTANTE ) || varUtilizada.getTipo() != Codigo.INTEIRO){
                            throw new AnaliseSemanticaException("Atribuição inválida -> Esperado: " + varUtilizada.getTipo() + " Encontrado: " +  ts.getCategoria());
                        }
                    }
@@ -210,7 +210,7 @@ public class AnaliseSemantica {
         }else if(codigo == Codigo.INTEGER){
             if(var){
                 for(Token t: tokensTmp){
-                    insertSimbolo(new TabelaSimbolo(t.getPalavra(), Categoria.VARIAVEL, Codigo.INTEGER));
+                    insertSimbolo(new TabelaSimbolo(t.getPalavra(), Categoria.VARIAVEL, Codigo.INTEIRO));
                 }
 
                 tokensTmp.clear();
@@ -225,6 +225,13 @@ public class AnaliseSemantica {
             }
         }else if(codigo == Codigo.BEGIN){
             varUtilizada = null;
+        }else if(codigo == Codigo.INTEIRO){
+            if(varUtilizada != null){
+                if(varUtilizada.getTipo() != codigo){
+                    throw new AnaliseSemanticaException("Atribuição inválida -> Esperado: " + varUtilizada.getTipo() + " Encontrado: " +  codigo);
+                }
+
+            }
         }
     }
 
